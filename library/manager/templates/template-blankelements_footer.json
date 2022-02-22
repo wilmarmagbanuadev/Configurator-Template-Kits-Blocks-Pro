@@ -1,0 +1,293 @@
+{
+  "success": true,
+  "data": {
+    "templates": [
+      {
+        "template_id": 31,
+        "title": "Footer 1",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-31.jpg",
+        "preview": "preview-31.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 32,
+        "title": "Footer 2",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-32.jpg",
+        "preview": "preview-32.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 33,
+        "title": "Footer 3",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-33.jpg",
+        "preview": "preview-33.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 34,
+        "title": "Footer 4",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-34.jpg",
+        "preview": "preview-34.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 35,
+        "title": "Footer 5",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-35.jpg",
+        "preview": "preview-35.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 36,
+        "title": "Footer 6",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-36.jpg",
+        "preview": "preview-36.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 37,
+        "title": "Footer 7",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-37.jpg",
+        "preview": "preview-37.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 38,
+        "title": "Footer 8",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-38.jpg",
+        "preview": "preview-38.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 39,
+        "title": "Footer 9",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-39.jpg",
+        "preview": "preview-39.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      },
+      {
+        "template_id": 40,
+        "title": "Footer 10",
+        "description": "",
+        "categories": [
+          "inner_pages"
+        ],
+        "keywords": [],
+        "source": "blankelements_api",
+        "hasPageSettings": "",
+        "thumbnail": "preview-40.jpg",
+        "preview": "preview-40.jpg",
+        "livelink": "https://products.blankelements.com/agency/",
+        "type": "blankelements_page",
+        "author": "BloomPixel",
+        "package": "free",
+        "modified": "2020-05-03 09:23:04"
+      }
+    ],
+    "categories": [
+      {
+        "title": "Select Option",
+        "slug": ""
+      },
+      {
+        "title": "Travel Agency",
+        "slug": "travel_agency"
+      },
+      {
+        "title": "Agency",
+        "slug": "agency"
+      },
+      {
+        "title": "Medical",
+        "slug": "medical"
+      },
+      {
+        "title": "Business",
+        "slug": "business"
+      },
+      {
+        "title": "Carrepair",
+        "slug": "carrepair"
+      },
+      {
+        "title": "Cleaning",
+        "slug": "cleaning"
+      },
+      {
+        "title": "Construction",
+        "slug": "construction"
+      },
+      {
+        "title": "Education",
+        "slug": "education"
+      },
+      {
+        "title": "Event",
+        "slug": "event"
+      },
+      {
+        "title": "Beauty And Spa",
+        "slug": "beauty_and_spa"
+      },
+      {
+        "title": "Garden",
+        "slug": "garden"
+      },
+      {
+        "title": "Hosting",
+        "slug": "hosting"
+      },
+      {
+        "title": "Islamic",
+        "slug": "islamic"
+      },
+      {
+        "title": "Lawyer",
+        "slug": "lawyer"
+      },
+      {
+        "title": "Mobile App",
+        "slug": "mobile_app"
+      },
+      {
+        "title": "Photography",
+        "slug": "photography"
+      },
+      {
+        "title": "Political",
+        "slug": "political"
+      },
+      {
+        "title": "Inner Pages",
+        "slug": "inner_pages"
+      },
+      {
+        "title": "Restaurant",
+        "slug": "restaurant"
+      },
+      {
+        "title": "Software",
+        "slug": "software"
+      },
+      {
+        "title": "Sports",
+        "slug": "sports"
+      },
+      {
+        "title": "Wedding",
+        "slug": "wedding"
+      },
+      {
+        "title": "Yoga",
+        "slug": "yoga"
+      },
+      {
+        "title": "Music",
+        "slug": "music"
+      },
+      {
+        "title": "Portfolio",
+        "slug": "portfolio"
+      }
+    ]
+  }
+}
