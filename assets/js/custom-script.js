@@ -48,6 +48,7 @@
                 setTimeout(function() {
                     $('.settings_message').removeClass('loaded');
                 }, 2000);
+                //location.reload();
             }
         });
 

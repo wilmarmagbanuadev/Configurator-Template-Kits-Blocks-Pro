@@ -5,7 +5,7 @@
 			<div class="header-dialog blankelements-lightbox-header">
 				<div class="blankelements_modal_logo header_logo">
 					<span class="header_logo_icon-wrapper">    
-						<img src="<?php echo BLANK_ELEMENTS_PRO_URL; ?>/assets/images/logo.png" alt="<?php echo esc_attr_e('Logo','blank-elements-pro'); ?>">
+						<img src="<?php echo Configurator_Template_Kits_Blocks_URL; ?>/assets/images/logo.png" alt="<?php echo esc_attr_e('Logo','blank-elements-pro'); ?>">
 					</span>
 				</div>
 				<div class="blankelements_modal_close modal_close_btn">
@@ -23,7 +23,7 @@
 				<div class="content-dialog blankelements-lightbox-content">
 					<div class="lightbox-content-title">
 						<div class="icon">
-							<img src="<?php echo BLANK_ELEMENTS_PRO_URL; ?>/assets/images/msg-icon.png" alt="<?php echo esc_attr_e('Message Icon','blank-elements-pro'); ?>">
+							<img src="<?php echo Configurator_Template_Kits_Blocks_URL; ?>/assets/images/msg-icon.png" alt="<?php echo esc_attr_e('Message Icon','blank-elements-pro'); ?>">
 						</div>
 						<?php esc_html_e( 'Build Headers & Footers Easily', 'blank-elements-pro' );?>
 					</div>

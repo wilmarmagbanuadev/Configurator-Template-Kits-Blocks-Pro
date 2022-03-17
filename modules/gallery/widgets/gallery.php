@@ -53,7 +53,7 @@ class Gallery extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'blank-elements-widgets' ];
+		return [ 'configurator-template-kits-blocks-widgets' ];
 	}
 
 	
@@ -295,9 +295,9 @@ class Gallery extends Widget_Base {
 					'sort'      => true,
 				],
 				'default' => [
-					
-					'condition_key' =>__( 'authentication', 'blank-elements-pro' ),
-
+					[
+						'condition_key' =>__( 'authentication', 'configurator-blocks-pro' ),
+					],
 				],
 				'title_field' => 'Rule',
 			]

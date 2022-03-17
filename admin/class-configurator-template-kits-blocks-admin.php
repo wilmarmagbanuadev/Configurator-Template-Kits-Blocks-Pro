@@ -125,7 +125,7 @@ class Blank_Elements_Pro_Admin_Settings {
 	 */
 	public function blankelements_posttype() {
 		$labels = [
-			'name'               => __( 'Configurator Template Kits Blocks', 'blank-elements-pro' ),
+			'name'               => __( 'Configurator Template Kits Blocks Pro', 'blank-elements-pro' ),
 			'singular_name'      => __( 'Configurator Template Kits Blocks', 'blank-elements-pro' ),
 			'menu_name'          => __( 'Configurator Template Kits Blocks', 'blank-elements-pro' ),
 			'name_admin_bar'     => __( 'Configurator Template Kits Blocks', 'blank-elements-pro' ),
@@ -196,23 +196,23 @@ class Blank_Elements_Pro_Admin_Settings {
     	}
     }
 
-	add_submenu_page( 
-    	self::key(), 
-    	esc_html__( 'License', 'blank-elements-pro' ), 
-    	esc_html__( 'License', 'blank-elements-pro' ), 
-        'manage_options',
-        self::key().'-license',
-    	[$this, 'register_admin_license_settings']
-	);
+	// add_submenu_page( 
+    // 	self::key(), 
+    // 	esc_html__( 'License', 'blank-elements-pro' ), 
+    // 	esc_html__( 'License', 'blank-elements-pro' ), 
+    //     'manage_options',
+    //     self::key().'-license',
+    // 	[$this, 'register_admin_license_settings']
+	// );
 
-    	$support_url = 'https://www.blankelements.com/';	
-    		add_submenu_page( 
-	        	self::key(), 
-	        	esc_html__( 'Support', 'blank-elements-pro' ), 
-	        	esc_html__( 'Support', 'blank-elements-pro' ), 
-	            'manage_options',
-	        	$support_url
-			);
+	$support_url = 'https://www.configurator-template-kits-blocks.com/';	
+	add_submenu_page( 
+		self::key(), 
+		esc_html__( 'Support', 'blank-elements-pro' ), 
+		esc_html__( 'Support', 'blank-elements-pro' ), 
+		'manage_options',
+		$support_url
+	);
 		
 	}
 
@@ -281,45 +281,56 @@ class Blank_Elements_Pro_Admin_Settings {
 
 	public static function default_widgets($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
-		
+		$cf7    = is_plugin_active( 'contact-form-7/wp-contact-form-7.php' );
+		$woo    = is_plugin_active( 'woocommerce/woocommerce.php' );
 		$default_list = [
-			'breadcrumbs', // This should match the name of the folder located inside the Modules folder - Your widget/element name!
-			'button', 
-			'counter',
-			'countdown',
-            'contact-form-seven',
-            'heading',
-            'navigation',
-            'posts',
-            'site-logo',
-            'site-title',
-            'slider',
-            'testimonial',
-            'instagram-feed',
-            'portfolio',
-            'portfolio-slider',
-            'products',
-            'product-categories',
-            'product-slider',
-            'woocommerce-cart',
-            'woocommerce-mini-cart',
-			'dynamic-slider',
-			'embed-youtube',
-			'gallery',
-			'tab',
-			'video-slider',
-			'product-tab',
-			'video-gallery',
-			'team-member',
-			'post-slider',
-			'faq',
-			'button-group',
-			'timeline',
-			'instagran-feeds',
-			'twitter-tweet',
+			// This should match the name of the folder located inside the Modules folder - Your widget/element name!
+			//add advanced function
+			'breadcrumbs', //advanced function added.
+			'button', //advanced function added.
+			//'counter', //advanced function added..need to rework
+			//'countdown', //advanced function added.need to rework
+			'contact-form-seven',//advanced function added.
+            'heading', //advanced function added.
+            'navigation',//advanced function added.
+            'posts',//advanced function added.
+            'site-logo',//advanced function added.
+            'site-title',//advanced function added./ perfect sample in advance show hide
+            'slider',//advanced function added.
+            'testimonial',//advanced function added.
+			//pro
+            //'instagram-feed',//pro//advanced function added.(not tested)
+            'portfolio',//pro//advanced function added.
+            'portfolio-slider',//pro//advanced function added.
+            'products',//pro//advanced function added.
+            'product-categories',//pro//advanced function added.
+            'product-slider',//pro//advanced function added.
+            'woocommerce-cart',//pro//advanced function added.
+            'woocommerce-mini-cart',//pro
+			// 'embed-youtube',
+			// 'gallery',
+			// 'tab',
+			// 'video-slider',
+			// 'product-tab',
+			// 'video-gallery',
+			// 'team-member',
+			// 'post-slider',
+			// 'faq',
+			// 'button-group',
+			// 'timeline',
+			// 'instagran-feeds',
+			// 'twitter-tweet',
 
 
 		];
+		//check if cf7 is installed or active
+		if(!$cf7){
+			//unset($default_list[4]);
+			$default_list = array_diff($default_list, array("contact-form-seven"));
+		}
+		if(!$woo ){
+			$default_list = array_diff($default_list, array("products","product-categories","product-slider","woocommerce-cart","woocommerce-mini-cart"));
+		}
 		
 		return $default_list;
 	}
@@ -393,6 +404,26 @@ class Blank_Elements_Pro_Admin_Settings {
 			'header-footer',
 		];
         
+		return $default_list;
+	}
+	public static function license_key($package = null){
+		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
+		
+		$default_list = [
+			'license_key', 
+
+		];
+		
+		return $default_list;
+	}
+	public static function license_key_v($package = null){
+		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
+		
+		$default_list = [
+			'license_key_v'=>null, 
+
+		];
+		
 		return $default_list;
 	}
 

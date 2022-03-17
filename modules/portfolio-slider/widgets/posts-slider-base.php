@@ -332,8 +332,135 @@ abstract class Posts_Slider_base extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
 		$this->register_query_section_controls();
+        // add advance Display Conditions
+		$this->start_controls_section(
+			'configurator_block_advanced',
+                [
+                    'label' => __( 'Configurator Block Rule', 'configurator-blocks' ),
+                    'tab' => Controls_Manager::TAB_ADVANCED,
+                ]
+            );
+            $this->add_control(
+                'configurator_block_condition',
+                [
+                    'label' => __( 'Rule Condition', 'configurator-blocks' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'options' => [
+                        'yes' => __( 'Yes', 'configurator-blocks' ),
+                        'no' => __( 'No', 'configurator-blocks' ),
+                    ],
+                    'default' => 'no'
+                ]
+            );
+            $repeater = new Repeater();
+
+            $repeater->add_control(
+                'condition_key',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authentication',
+                    'show_label' => false,
+                    'options' => [
+                        // User
+                        'authentication'  =>__( 'Login Status', 'configurator-blocks' ),
+                        'user'  =>__( 'Current User', 'configurator-blocks' ),
+                        'role'  =>__( 'User Role', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_not',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'is',
+                    'show_label' => false,
+                    'options' => [
+                        'is'  =>__( 'Is', 'configurator-blocks' ),
+                        'is_not'  =>__( 'Is Not', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_login',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authenticated',
+                    'condition' => [
+                        'condition_key' => 'authentication'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'authenticated'  =>__( 'Logged in', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'current_user',
+                [
+                    'type' => Controls_Manager::TEXT,
+                    'label_block'=>true,
+                    'condition' => [
+                        'condition_key' => 'user'
+                    ],
+                    'show_label' => false,
+                    'placeholder' => __( 'Current User', 'configurator-blocks' ),
+            
+                ]
+            );
+    
+            $repeater->add_control(
+                'user_role',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'subscriber',
+                    'condition' => [
+                        'condition_key' => 'role'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'administrator'  =>__( 'Administrator', 'configurator-blocks' ),
+                        'editor'  =>__( 'Editor', 'configurator-blocks' ),
+                        'author'  =>__( 'Author', 'configurator-blocks' ),
+                        'contributor'  =>__( 'Contributor', 'configurator-blocks' ),
+                        'subscriber'  =>__( 'Subscriber', 'configurator-blocks' )
+                    ],	
+            
+                ]
+            );
+    
+            $this->add_control(
+                
+                'condition_list',
+                [
+                    'label' => __( '', 'configurator-blocks' ),
+                    'type' => Controls_Manager::REPEATER,
+                    'condition' => [
+                        'configurator_block_condition' => 'yes'
+                    ],
+                    'fields' => $repeater->get_controls(),
+                    'item_actions' => [
+                        'add'       => false,
+                        'duplicate' => false,
+                        'remove'    => false,
+                        'sort'      => true,
+                    ],
+                    'default' => [
+                        [
+                            'condition_key' =>__( 'authentication', 'configurator-blocks-pro' ),
+                        ],
+                    ],
+                    'title_field' => 'Rule',
+                ]
+            );
+        $this->end_controls_section();
 		$this->register_slider_section_controls();
 	}
 

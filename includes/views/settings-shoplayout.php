@@ -14,12 +14,8 @@ $related_products = $widgets_class -> related_products();
 $related_products_option = ! empty( $blank_elements_options['related_products-option'] ) ? $blank_elements_options['related_products-option'] : array(); 
 
 
-
-$cart_button = $widgets_class -> cart_button();
-$cart_button_option = ! empty( $blank_elements_options['cart_button-option'] ) ? $blank_elements_options['cart_button-option'] : array(); 
-
 $product_per_page = $widgets_class -> product_per_page();
-$product_per_page_count = ! empty( $blank_elements_options['product_per_page-count'] ) ? $blank_elements_options['product_per_page-count'] : array(); 
+$product_per_page_count = ! empty( $blank_elements_options['product_per_page-count'] ) ? $blank_elements_options['product_per_page-count'] : 5; 
 
 ?>
 
@@ -30,7 +26,7 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
     <h4 class="content_head_description">
         <?php esc_html_e('', 'blank-elements-pro'); ?>
     </h4>
-    <div class="notice notice-warning " style="z-index: 2;">
+    <div class="notice notice-warning " style="z-index: 2;display:none;">
 		<p>some related shop modification won't affect if the current theme already modified the files of woocommerce</p>
         <!-- <p>shop page > Cart Button : Not working yet</p> -->
 	</div>
@@ -85,6 +81,7 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                                                     'name' => 'blank-elements-pro[display_breadcrumb-option][]',
                                                     'style' => $widget,
                                                     'value' => $widget,
+                                                    'info' => ($display_breadcrumb_option[0]==null)?'show':$display_breadcrumb_option[0],
                                                     'options'=> [
                                                         'checked' => ((in_array( $widget, $display_breadcrumb_option ) && $pro == false) ? true : false),
                                                     ]
@@ -105,6 +102,7 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                                                     'name' => 'blank-elements-pro[related_products-option][]',
                                                     'style' => $widget,
                                                     'value' => $widget,
+                                                    'info' => ($related_products_option[0]==null)?'show':$related_products_option[0],
                                                     'options'=> [
                                                         'checked' => ((in_array( $widget, $related_products_option ) && $pro == false) ? true : false),
                                                     ]
@@ -130,26 +128,6 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                 <div id="shop_page_data_control" class="attr-panel-collapse attr-collapse" role="tabpanel" aria-labelledby="shop_page_data_control">
                     <div class="attr-panel-body">
                         <hr>
-                        <h4 class="" style="color:#fff;">Cart Button</h4>
-                        <p class="" style="color:#fff;">Do you want to display Cart Button?</p>
-                        <div class="cart_button">
-                                <?php foreach($cart_button as $widget): ?>
-                                        <?php
-                                            $pro = ($widget && $widgets_class::PACKAGE_TYPE == 'free') ? false : true;
-                                            $widgets_class->input([
-                                                'type' => 'show-hide',
-                                                'name' => 'blank-elements-pro[cart_button-option][]',
-                                                'style' => $widget,
-                                                'value' => $widget,
-                                                'options'=> [
-                                                    'checked' => ((in_array( $widget, $cart_button_option ) && $pro == false) ? true : false),
-                                                ]
-                                            ]);
-                                                ?>
-                                    <?php endforeach; ?>                  
-                            <div class="clear"></div>
-                        </div>
-                        <hr>
                         <h4 class="" style="color:#fff;">Number of Products</h4>
                         <p class="" style="color:#fff;">How many products you want to display per page?</p>
                         <?php //echo get_option('blank-elements-pro')['product_page_style-list'][0]; ?>
@@ -158,8 +136,8 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                                   'type' => 'number',
                                   'name' => 'blank-elements-pro[product_per_page-count][]',
                                   'label' => esc_html__('', 'blank-elements-pro'),
-                                  'placeholder' => '',
-                                  'value' => $product_per_page_count[0],
+                                  'placeholder' => '5',
+                                  'value' => ($product_per_page_count[0]==null)?5:$product_per_page_count[0],
                               ]);
                           ?>
                         <pre>

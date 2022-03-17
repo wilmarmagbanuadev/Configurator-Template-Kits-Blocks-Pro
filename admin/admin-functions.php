@@ -24,18 +24,18 @@ function configurator_template_kits_blocks_fail_load_admin_notice() {
 			return;
 		}
 
-		$message = __( 'Configurator Template Kits Blocks Pro  work perfectly with Elementor Page Builder plugin but require Configurator Template Kits Blocks Plugin', 'configurator-elementor' );
+		$message = __( 'Configurator Template Kits Blocks Pro require Configurator Template Kits Blocks Plugin to work', 'configurator-elementor' );
 
-		$button_text = __( 'Configurator Template Kits Blocks', 'configurator-elementor' );
+		$button_text = __( 'Activate Configurator Template Kits Blocks', 'configurator-elementor' );
 		$button_link = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
 	} else {
 		if ( ! current_user_can( 'install_plugins' ) ) {
 			return;
 		}
 
-		$message = __( 'Configurator Template Kits Blocks Pro require Configurator Template Kits Blocks Plugin. We recommend you use it together with Elementor Page Builder plugin, they work perfectly together!', 'configurator-elementor' );
+		$message = __( 'Configurator Template Kits Blocks Pro require Configurator Template Kits Blocks Plugin to work', 'configurator-elementor' );
 
-		$button_text = __( 'Install require Configurator Template Kits Blocks', 'configurator-elementor' );
+		$button_text = __( 'Install Configurator Template Kits Blocks', 'configurator-elementor' );
 		$button_link = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=elementor' ), 'install-plugin_elementor' );
 	}
 
@@ -114,7 +114,7 @@ function configurator_template_kits_blocks_fail_load_admin_notice() {
 			}
 		}
 	</style>
-	<div class="notice notice-warning  configurator-elementor-notices configurator-elementor-install-elementor" <?php if ( is_plugin_active( 'configurator-template-kits-blocks/configurator-template-kits-blocks.php' ) ) { ?> style="display:none;" <?php }  ?>>
+	<div class="notice notice-warning  configurator-elementor-notice configurator-elementor-install-elementor" <?php if ( is_plugin_active( 'configurator-template-kits-blocks/configurator-template-kits-blocks.php' ) ) { ?> style="display:none;" <?php }  ?>>
 		<div class="configurator-elementor-notice-inner">
 			<div class="configurator-elementor-notice-content">
 				<p><?php echo esc_html( $message ); ?></p>

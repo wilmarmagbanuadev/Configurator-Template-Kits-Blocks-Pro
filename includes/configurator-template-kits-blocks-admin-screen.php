@@ -1,5 +1,5 @@
 <?php
-
+$woo    = is_plugin_active( 'woocommerce/woocommerce.php' );
 $sections = [
     'dashboard' => [
         'title' => esc_html__('Dashboard', 'blank-elements-pro'),
@@ -16,23 +16,31 @@ $sections = [
         'sub-title' => esc_html__('Enable & Disable Theme Builder Elements', 'blank-elements-pro'),
         'icon' => '',
     ],
-    'userdata' => [
+    /**'userdata' => [
         'title' => esc_html__('User Data', 'blank-elements-pro'),
         'sub-title' => esc_html__('Data for fb, mailchimp etc', 'blank-elements-pro'),
         'icon' => '',
-    ],
+    ],**/
     'shoplayout' => [
         'title' => esc_html__('Shop', 'blank-elements-pro'),
         'sub-title' => esc_html__('Shop Single Page,Shop Page Style', 'blank-elements-pro'),
         'icon' => '',
     ],
-    'advanced' => [
+    /**'license' => [
+        'title' => esc_html__('License', 'blank-elements-pro'),
+        'sub-title' => esc_html__('Activate license to get the latest update', 'blank-elements-pro'),
+        'icon' => '',
+    ],**/
+    /**'advanced' => [
         'title' => esc_html__('Advanced-Beta', 'blank-elements-pro'),
         'sub-title' => esc_html__('Advanced function such as site speed', 'blank-elements-pro'),
         'icon' => '',
-    ]
+    ],**/
+    
 ];
-
+if(!$woo ){
+    unset($sections["shoplayout"]); 
+}
 $blank_elements_options = get_option( 'blank-elements-pro', array() );
 
 ?>

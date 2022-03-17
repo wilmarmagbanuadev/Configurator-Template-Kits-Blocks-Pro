@@ -50,7 +50,7 @@ class Instagram_Feed extends Widget_Base {
 	 * @return array Widget categories.
 	 */
     public function get_categories() {
-        return [ 'blank-elements-widgets'];
+        return [ 'configurator-template-kits-blocks-pro-widgets'];
     }
 
     /**
@@ -1042,7 +1042,134 @@ class Instagram_Feed extends Widget_Base {
         $this->end_controls_tabs();
         
         $this->end_controls_section();
+        // add advance Display Conditions
+		$this->start_controls_section(
+			'configurator_block_advanced',
+                [
+                    'label' => __( 'Configurator Block Rule', 'configurator-blocks' ),
+                    'tab' => Controls_Manager::TAB_ADVANCED,
+                ]
+            );
+            $this->add_control(
+                'configurator_block_condition',
+                [
+                    'label' => __( 'Rule Condition', 'configurator-blocks' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'options' => [
+                        'yes' => __( 'Yes', 'configurator-blocks' ),
+                        'no' => __( 'No', 'configurator-blocks' ),
+                    ],
+                    'default' => 'no'
+                ]
+            );
+            $repeater = new Repeater();
 
+            $repeater->add_control(
+                'condition_key',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authentication',
+                    'show_label' => false,
+                    'options' => [
+                        // User
+                        'authentication'  => _( 'Login Status', 'configurator-blocks' ),
+                        'user'  => _( 'Current User', 'configurator-blocks' ),
+                        'role'  => _( 'User Role', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_not',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'is',
+                    'show_label' => false,
+                    'options' => [
+                        'is'  => _( 'Is', 'configurator-blocks' ),
+                        'is_not'  => _( 'Is Not', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_login',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authenticated',
+                    'condition' => [
+                        'condition_key' => 'authentication'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'authenticated'  => _( 'Logged in', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'current_user',
+                [
+                    'type' => Controls_Manager::TEXT,
+                    'label_block'=>true,
+                    'condition' => [
+                        'condition_key' => 'user'
+                    ],
+                    'show_label' => false,
+                    'placeholder' => __( 'Current User', 'configurator-blocks' ),
+            
+                ]
+            );
+    
+            $repeater->add_control(
+                'user_role',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'subscriber',
+                    'condition' => [
+                        'condition_key' => 'role'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'administrator'  => _( 'Administrator', 'configurator-blocks' ),
+                        'editor'  => _( 'Editor', 'configurator-blocks' ),
+                        'author'  => _( 'Author', 'configurator-blocks' ),
+                        'contributor'  => _( 'Contributor', 'configurator-blocks' ),
+                        'subscriber'  => _( 'Subscriber', 'configurator-blocks' )
+                    ],	
+            
+                ]
+            );
+    
+            $this->add_control(
+                
+                'condition_list',
+                [
+                    'label' => __( '', 'configurator-blocks' ),
+                    'type' => Controls_Manager::REPEATER,
+                    'condition' => [
+                        'configurator_block_condition' => 'yes'
+                    ],
+                    'fields' => $repeater->get_controls(),
+                    'item_actions' => [
+                        'add'       => false,
+                        'duplicate' => false,
+                        'remove'    => false,
+                        'sort'      => true,
+                    ],
+                    'default' => [
+                        [
+                            'condition_key' =>__( 'authentication', 'configurator-blocks-pro' ),
+                        ],
+                    ],
+                    'title_field' => 'Rule',
+                ]
+            );
+        $this->end_controls_section();
     }
 
     /**
@@ -1101,40 +1228,311 @@ class Instagram_Feed extends Widget_Base {
             'comments'          => ( $settings['insta_comments'] == 'yes' ) ? '1' : '0',
             'layout'            => 'grid',
         ];
-        ?>
-        <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
-            <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
-                <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
-                    <span class="blank-instagram-feed-title-wrap">
-                        <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
-                            <span class="blank-instagram-feed-title">
-                                <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
-                                    <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
-                                        <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+        // wrap  orginal to variable
+        if($settings['configurator_block_condition']=='yes'){
+            foreach (  $settings['condition_list'] as $item ) {
+                switch ($item['condition_key']) {
+                    case 'authentication':
+                        if($item['is_not']=='is' && is_user_logged_in()){
+                          // show original here
+                          ?>
+                          <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                              <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                                  <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                                      <span class="blank-instagram-feed-title-wrap">
+                                          <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                              <span class="blank-instagram-feed-title">
+                                                  <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                      <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                                          <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                      <?php } ?>
+                                                  <?php } ?>
+                                                  <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                                  <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                      <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                                          <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                      <?php } ?>
+                                                  <?php } ?>
+                                              </span>
+                                          </a>
+                                      </span>
+                                  <?php } ?>
+                              <?php } ?>
+                              
+                              <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                                  <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                                      <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                                  </div>
+                                  <?php
+                                      $this->render_load_more_button();
+                                  ?>
+                              </div>
+                          </div>
+                          <?php
+                        }elseif($item['is_not']=='is_not' && !is_user_logged_in()){
+                           // show original here
+                           ?>
+                           <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                               <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                                   <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                                       <span class="blank-instagram-feed-title-wrap">
+                                           <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                               <span class="blank-instagram-feed-title">
+                                                   <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                       <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                                           <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                       <?php } ?>
+                                                   <?php } ?>
+                                                   <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                                   <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                       <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                                           <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                       <?php } ?>
+                                                   <?php } ?>
+                                               </span>
+                                           </a>
+                                       </span>
+                                   <?php } ?>
+                               <?php } ?>
+                               
+                               <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                                   <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                                       <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                                   </div>
+                                   <?php
+                                       $this->render_load_more_button();
+                                   ?>
+                               </div>
+                           </div>
+                           <?php
+                        }
+                    break;
+                    case 'user':
+                        global $current_user;
+                        wp_get_current_user();
+                        $current_user = $current_user->user_login;
+                        if($item['is_not']=='is'){
+                            if($current_user==$item['current_user']){
+                               // show original here
+                               ?>
+                               <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                                   <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                                       <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                                           <span class="blank-instagram-feed-title-wrap">
+                                               <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                                   <span class="blank-instagram-feed-title">
+                                                       <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                           <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                                               <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                           <?php } ?>
+                                                       <?php } ?>
+                                                       <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                                       <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                           <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                                               <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                           <?php } ?>
+                                                       <?php } ?>
+                                                   </span>
+                                               </a>
+                                           </span>
+                                       <?php } ?>
+                                   <?php } ?>
+                                   
+                                   <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                                       <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                                           <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                                       </div>
+                                       <?php
+                                           $this->render_load_more_button();
+                                       ?>
+                                   </div>
+                               </div>
+                               <?php
+                            }
+                        }elseif($item['is_not']=='is_not'){
+                            if($current_user!=$item['current_user']){
+                                // show original here
+                                ?>
+                                <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                                    <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                                        <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                                            <span class="blank-instagram-feed-title-wrap">
+                                                <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                                    <span class="blank-instagram-feed-title">
+                                                        <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                            <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                                                <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                        <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                                        <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                            <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                                                <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                    </span>
+                                                </a>
+                                            </span>
+                                        <?php } ?>
                                     <?php } ?>
-                                <?php } ?>
-                                <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
-                                <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
-                                    <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
-                                        <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                    
+                                    <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                                        <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                                            <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                                        </div>
+                                        <?php
+                                            $this->render_load_more_button();
+                                        ?>
+                                    </div>
+                                </div>
+                                <?php
+
+                            }
+                        }
+                    break;
+                    case 'role':
+                        $user_meta = get_userdata(get_current_user_id());
+						$user_roles=$user_meta->roles;
+                        // Check if the role you're interested in, is present in the array.
+						if($user_roles){
+							if ( in_array( 'administrator', $user_roles, true ) ) {
+								$user_role = 'administrator';
+							}else if(in_array( 'editor', $user_roles, true )){
+								$user_role = 'editor';
+							}else if(in_array( 'author', $user_roles, true )){
+								$user_role = 'author';
+							}else if(in_array( 'contributor', $user_roles, true )){
+								$user_role = 'contributor';
+							}else if(in_array( 'subscriber', $user_roles, true )){
+								$user_role = 'subscriber';
+							}
+						}
+
+                        if($item['is_not']=='is'){
+							if($item['user_role']==$user_role){
+                               // show original here
+                               ?>
+                               <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                                   <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                                       <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                                           <span class="blank-instagram-feed-title-wrap">
+                                               <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                                   <span class="blank-instagram-feed-title">
+                                                       <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                           <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                                               <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                           <?php } ?>
+                                                       <?php } ?>
+                                                       <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                                       <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                           <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                                               <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                           <?php } ?>
+                                                       <?php } ?>
+                                                   </span>
+                                               </a>
+                                           </span>
+                                       <?php } ?>
+                                   <?php } ?>
+                                   
+                                   <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                                       <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                                           <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                                       </div>
+                                       <?php
+                                           $this->render_load_more_button();
+                                       ?>
+                                   </div>
+                               </div>
+                               <?php
+                            }
+                            
+						}elseif($item['is_not']=='is_not'){
+							if($item['user_role']!=$user_role){
+                                // show original here
+                                ?>
+                                <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                                    <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                                        <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                                            <span class="blank-instagram-feed-title-wrap">
+                                                <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                                    <span class="blank-instagram-feed-title">
+                                                        <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                            <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                                                <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                        <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                                        <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                                            <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                                                <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                    </span>
+                                                </a>
+                                            </span>
+                                        <?php } ?>
                                     <?php } ?>
-                                <?php } ?>
-                            </span>
-                        </a>
-                    </span>
+                                    
+                                    <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                                        <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                                            <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                                        </div>
+                                        <?php
+                                            $this->render_load_more_button();
+                                        ?>
+                                    </div>
+                                </div>
+                                <?php
+                                   
+                            }
+                        }
+
+                    break;
+                    default:
+                    echo $item['condition_key'].' condition need to set up';
+                    break;
+                }
+            }
+        }else{
+            //show original here
+            ?>
+            <div <?php echo $this->get_render_attribute_string( 'insta-feed-wrap' ); ?> data-settings='<?php echo wp_json_encode( $pp_widget_options ); ?>'>
+                <?php if ( $settings['insta_profile_link'] == 'yes' ) { ?>
+                    <?php if ( ! empty( $settings['insta_link_title'] ) ) { ?>
+                        <span class="blank-instagram-feed-title-wrap">
+                            <a <?php echo $this->get_render_attribute_string( 'instagram-profile-link' ); ?>>
+                                <span class="blank-instagram-feed-title">
+                                    <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                        <?php if ( $settings['insta_title_icon_position'] == 'before_title' ) { ?>
+                                            <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                        <?php } ?>
+                                    <?php } ?>
+                                    <?php echo esc_attr( $settings[ 'insta_link_title' ] ); ?>
+                                    <?php if ( ! empty( $settings['insta_title_icon'] ) ) { ?>
+                                        <?php if ( $settings['insta_title_icon_position'] == 'after_title' ) { ?>
+                                            <span class="<?php echo esc_attr( $settings['insta_title_icon'] ); ?>" aria-hidden="true"></span>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </span>
+                            </a>
+                        </span>
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
-            
-            <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
-                <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
-                    <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                
+                <div <?php echo $this->get_render_attribute_string( 'insta-feed-inner' ); ?>>
+                    <div <?php echo $this->get_render_attribute_string( 'insta-feed-container' ); ?>>
+                        <div <?php echo $this->get_render_attribute_string( 'insta-feed' ); ?>></div>
+                    </div>
+                    <?php
+                        $this->render_load_more_button();
+                    ?>
                 </div>
-                <?php
-                    $this->render_load_more_button();
-                ?>
             </div>
-        </div>
-        <?php
+            <?php
+             
+		}//end
+      
     }
 
     /**

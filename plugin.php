@@ -327,6 +327,16 @@ class Pro_Plugin {
 			],
 			1
 		);
+
+		// Add element category in panel
+		\Elementor\Plugin::instance()->elements_manager->add_category(
+			'configurator-template-kits-blocks-widgets', // This is the name of your addon's category and will be used to group your widgets/elements in the Edit sidebar pane!
+			[
+				'title' => __( 'Configurator Template Kits Blocks', 'configurator-template-kits-blocks' ), // The title of your modules category - keep it simple and short!
+				'icon' => 'font',
+			],
+			1
+		);
 	}
 
 	protected function add_actions() {

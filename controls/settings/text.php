@@ -12,7 +12,7 @@ $label_name = str_replace("-", " ", $label);
     </label>
     <input
         type="text"
-        class="attr-form-control"
+        class="attr-form-control <?php echo $class; ?>"
         id="blank-admin-option-text<?php echo esc_attr($widgets_class::strify($name)); ?>"
         aria-describedby="blank-admin-option-text-help<?php echo esc_attr($widgets_class::strify($name)); ?>"
         placeholder="<?php echo esc_attr($placeholder); ?>"

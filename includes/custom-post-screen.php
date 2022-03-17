@@ -50,7 +50,7 @@ class Blankelements_Pro_Head_Foot_Editor_Api extends Pro_Selector_Api {
         $id = $this->request['id'];
         $open_editor = $this->request['open_editor'];
 
-        $title = ($this->request['title'] == '') ? ('Blank Elements #' . time()) : $this->request['title'];
+        $title = ($this->request['title'] == '') ? ('Configurator Template Kits Blocks Pro #' . time()) : $this->request['title'];
         $activation = $this->request['activation'];
         $type = $this->request['type'];
         $condition_a = ($type == 'section') ? '' : $this->request['condition_a'];

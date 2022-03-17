@@ -40,7 +40,7 @@ class Widget_Navigation extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'blank-elements-widgets'];
+		return [ 'configurator-template-kits-blocks-widgets'];
 	}
     
     /**
@@ -1706,6 +1706,134 @@ class Widget_Navigation extends Widget_Base {
 			$this->end_controls_tabs();
 
 		$this->end_controls_section();
+		// add advance Display Conditions
+		$this->start_controls_section(
+			'configurator_block_advanced',
+                [
+                    'label' => __( 'Configurator Block Rule', 'configurator-blocks' ),
+                    'tab' => Controls_Manager::TAB_ADVANCED,
+                ]
+            );
+            $this->add_control(
+                'configurator_block_condition',
+                [
+                    'label' => __( 'Rule Condition', 'configurator-blocks' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'options' => [
+                        'yes' => __( 'Yes', 'configurator-blocks' ),
+                        'no' => __( 'No', 'configurator-blocks' ),
+                    ],
+                    'default' => 'no'
+                ]
+            );
+            $repeater = new Repeater();
+
+            $repeater->add_control(
+                'condition_key',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authentication',
+                    'show_label' => false,
+                    'options' => [
+                        // User
+                        'authentication'  =>__( 'Login Status', 'configurator-blocks' ),
+                        'user'  =>__( 'Current User', 'configurator-blocks' ),
+                        'role'  =>__( 'User Role', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_not',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'is',
+                    'show_label' => false,
+                    'options' => [
+                        'is'  =>__( 'Is', 'configurator-blocks' ),
+                        'is_not'  =>__( 'Is Not', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_login',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authenticated',
+                    'condition' => [
+                        'condition_key' => 'authentication'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'authenticated'  =>__( 'Logged in', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'current_user',
+                [
+                    'type' => Controls_Manager::TEXT,
+                    'label_block'=>true,
+                    'condition' => [
+                        'condition_key' => 'user'
+                    ],
+                    'show_label' => false,
+                    'placeholder' => __( 'Current User', 'configurator-blocks' ),
+            
+                ]
+            );
+    
+            $repeater->add_control(
+                'user_role',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'subscriber',
+                    'condition' => [
+                        'condition_key' => 'role'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'administrator'  =>__( 'Administrator', 'configurator-blocks' ),
+                        'editor'  =>__( 'Editor', 'configurator-blocks' ),
+                        'author'  =>__( 'Author', 'configurator-blocks' ),
+                        'contributor'  =>__( 'Contributor', 'configurator-blocks' ),
+                        'subscriber'  =>__( 'Subscriber', 'configurator-blocks' )
+                    ],	
+            
+                ]
+            );
+    
+            $this->add_control(
+                
+                'condition_list',
+                [
+                    'label' => __( '', 'configurator-blocks' ),
+                    'type' => Controls_Manager::REPEATER,
+                    'condition' => [
+                        'configurator_block_condition' => 'yes'
+                    ],
+                    'fields' => $repeater->get_controls(),
+                    'item_actions' => [
+                        'add'       => false,
+                        'duplicate' => false,
+                        'remove'    => false,
+                        'sort'      => true,
+                    ],
+                    'default' => [
+                        [
+                            'condition_key' =>__( 'authentication', 'configurator-blocks-pro' ),
+                        ],
+                    ],
+                    'title_field' => 'Rule',
+                ]
+            );
+        $this->end_controls_section();
 	}
 
 	/**
@@ -1731,114 +1859,829 @@ class Widget_Navigation extends Widget_Base {
 		];
 
 		$menu_html = wp_nav_menu( $args );
+		// wrap  orginal to variable
+        if($settings['configurator_block_condition']=='yes'){
+            foreach (  $settings['condition_list'] as $item ) {
+                switch ($item['condition_key']) {
+                    case 'authentication':
+                        if($item['is_not']=='is' && is_user_logged_in()){
+                          // show original here
+						  if ( 'flyout' === $settings['layout'] ) {
 
-		if ( 'flyout' === $settings['layout'] ) {
+								$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+								if ( 'cta' === $settings['menu_last_item'] ) {
+					
+									$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+								}
+					
+								?>
+								<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+										<div class="be-nav-menu-icon">
+											<?php if ( $this->is_elementor_updated() ) { ?>
+												<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } else { ?>
+												<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } ?>
+										</div>
+									</div>
+								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+									<div class="be-flyout-overlay elementor-clickable"></div>
+									<div class="be-flyout-container">
+										<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+											<div class="be-flyout-content push">						
+												<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+												<div class="elementor-clickable be-flyout-close" tabindex="0">
+													<?php if ( $this->is_elementor_updated() ) { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+													<?php } else { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+													<?php } ?>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>				
+								<?php
+							} else {
+								$this->add_render_attribute(
+									'be-main-menu',
+									'class',
+									[
+										'be-nav-menu',
+										'be-layout-' . $settings['layout'],
+									]
+								);
+					
+								$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+					
+								$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+					
+								$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+					
+								if ( 'cta' === $settings['menu_last_item'] ) {
+					
+									$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
+								}
+					
+								if ( $settings['pointer'] ) {
+									if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+										$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+					
+										if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+											$key = 'animation_line';
+											$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+										} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+											$key = 'animation_' . $settings['pointer'];
+											$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+										}
+									}
+								}
+					
+								if ( 'expandible' === $settings['layout'] ) {
+									$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+								}
+					
+								$this->add_render_attribute(
+									'be-nav-menu',
+									'class',
+									[
+										'be-nav-menu__layout-' . $settings['layout'],
+										'be-nav-menu__submenu-' . $settings['submenu_icon'],
+									]
+								);
+					
+								$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+					
+								$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+					
+								$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+					
+								?>
+								<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+									<div class="be-nav-menu__toggle elementor-clickable">
+										<div class="be-nav-menu-icon">
+											<?php
+											if ( $this->is_elementor_updated() ) {
+												$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+												?>
+												<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } else { ?>
+												<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } ?>
+										</div>
+									</div>
+									<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
+								</div>
+								<?php
+							}
+                        }elseif($item['is_not']=='is_not' && !is_user_logged_in()){
+                           // show original here
+						   if ( 'flyout' === $settings['layout'] ) {
 
-			$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
-			if ( 'cta' === $settings['menu_last_item'] ) {
+								$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+								if ( 'cta' === $settings['menu_last_item'] ) {
+					
+									$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+								}
+					
+								?>
+								<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+										<div class="be-nav-menu-icon">
+											<?php if ( $this->is_elementor_updated() ) { ?>
+												<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } else { ?>
+												<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } ?>
+										</div>
+									</div>
+								<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+									<div class="be-flyout-overlay elementor-clickable"></div>
+									<div class="be-flyout-container">
+										<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+											<div class="be-flyout-content push">						
+												<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+												<div class="elementor-clickable be-flyout-close" tabindex="0">
+													<?php if ( $this->is_elementor_updated() ) { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+													<?php } else { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+													<?php } ?>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>				
+								<?php
+							} else {
+								$this->add_render_attribute(
+									'be-main-menu',
+									'class',
+									[
+										'be-nav-menu',
+										'be-layout-' . $settings['layout'],
+									]
+								);
+					
+								$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+					
+								$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+					
+								$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+					
+								if ( 'cta' === $settings['menu_last_item'] ) {
+					
+									$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
+								}
+					
+								if ( $settings['pointer'] ) {
+									if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+										$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+					
+										if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+											$key = 'animation_line';
+											$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+										} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+											$key = 'animation_' . $settings['pointer'];
+											$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+										}
+									}
+								}
+					
+								if ( 'expandible' === $settings['layout'] ) {
+									$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+								}
+					
+								$this->add_render_attribute(
+									'be-nav-menu',
+									'class',
+									[
+										'be-nav-menu__layout-' . $settings['layout'],
+										'be-nav-menu__submenu-' . $settings['submenu_icon'],
+									]
+								);
+					
+								$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+					
+								$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+					
+								$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+					
+								?>
+								<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+									<div class="be-nav-menu__toggle elementor-clickable">
+										<div class="be-nav-menu-icon">
+											<?php
+											if ( $this->is_elementor_updated() ) {
+												$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+												?>
+												<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } else { ?>
+												<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+											<?php } ?>
+										</div>
+									</div>
+									<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
+								</div>
+								<?php
+							}
+                        }
+                    break;
+                    case 'user':
+                        global $current_user;
+                        wp_get_current_user();
+                        $current_user = $current_user->user_login;
+                        if($item['is_not']=='is'){
+                            if($current_user==$item['current_user']){
+                               // show original here
+							   if ( 'flyout' === $settings['layout'] ) {
 
-				$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
-			}
+									$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+									if ( 'cta' === $settings['menu_last_item'] ) {
+						
+										$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+									}
+						
+									?>
+									<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+											<div class="be-nav-menu-icon">
+												<?php if ( $this->is_elementor_updated() ) { ?>
+													<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } else { ?>
+													<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } ?>
+											</div>
+										</div>
+									<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+										<div class="be-flyout-overlay elementor-clickable"></div>
+										<div class="be-flyout-container">
+											<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+												<div class="be-flyout-content push">						
+													<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+													<div class="elementor-clickable be-flyout-close" tabindex="0">
+														<?php if ( $this->is_elementor_updated() ) { ?>
+															<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+														<?php } else { ?>
+															<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+														<?php } ?>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>				
+									<?php
+								} else {
+									$this->add_render_attribute(
+										'be-main-menu',
+										'class',
+										[
+											'be-nav-menu',
+											'be-layout-' . $settings['layout'],
+										]
+									);
+						
+									$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+						
+									$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+						
+									$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+						
+									if ( 'cta' === $settings['menu_last_item'] ) {
+						
+										$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
+									}
+						
+									if ( $settings['pointer'] ) {
+										if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+											$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+						
+											if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+												$key = 'animation_line';
+												$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+											} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+												$key = 'animation_' . $settings['pointer'];
+												$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+											}
+										}
+									}
+						
+									if ( 'expandible' === $settings['layout'] ) {
+										$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+									}
+						
+									$this->add_render_attribute(
+										'be-nav-menu',
+										'class',
+										[
+											'be-nav-menu__layout-' . $settings['layout'],
+											'be-nav-menu__submenu-' . $settings['submenu_icon'],
+										]
+									);
+						
+									$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+						
+									$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+						
+									$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+						
+									?>
+									<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+										<div class="be-nav-menu__toggle elementor-clickable">
+											<div class="be-nav-menu-icon">
+												<?php
+												if ( $this->is_elementor_updated() ) {
+													$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+													?>
+													<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } else { ?>
+													<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } ?>
+											</div>
+										</div>
+										<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
+									</div>
+									<?php
+								}
+                            }
+                        }elseif($item['is_not']=='is_not'){
+                            if($current_user!=$item['current_user']){
+                                // show original here
+								if ( 'flyout' === $settings['layout'] ) {
 
-			?>
-			<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
-					<div class="be-nav-menu-icon">
-						<?php if ( $this->is_elementor_updated() ) { ?>
-							<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
-						<?php } else { ?>
-							<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
-						<?php } ?>
-					</div>
-				</div>
-			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
-				<div class="be-flyout-overlay elementor-clickable"></div>
-				<div class="be-flyout-container">
-					<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
-						<div class="be-flyout-content push">						
-							<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
-							<div class="elementor-clickable be-flyout-close" tabindex="0">
+										$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+										if ( 'cta' === $settings['menu_last_item'] ) {
+							
+											$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+										}
+							
+										?>
+										<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+												<div class="be-nav-menu-icon">
+													<?php if ( $this->is_elementor_updated() ) { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } else { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } ?>
+												</div>
+											</div>
+										<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+											<div class="be-flyout-overlay elementor-clickable"></div>
+											<div class="be-flyout-container">
+												<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+													<div class="be-flyout-content push">						
+														<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+														<div class="elementor-clickable be-flyout-close" tabindex="0">
+															<?php if ( $this->is_elementor_updated() ) { ?>
+																<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+															<?php } else { ?>
+																<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+															<?php } ?>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>				
+										<?php
+									} else {
+										$this->add_render_attribute(
+											'be-main-menu',
+											'class',
+											[
+												'be-nav-menu',
+												'be-layout-' . $settings['layout'],
+											]
+										);
+							
+										$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+							
+										$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+							
+										$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+							
+										if ( 'cta' === $settings['menu_last_item'] ) {
+							
+											$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
+										}
+							
+										if ( $settings['pointer'] ) {
+											if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+												$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+							
+												if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+													$key = 'animation_line';
+													$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+												} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+													$key = 'animation_' . $settings['pointer'];
+													$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+												}
+											}
+										}
+							
+										if ( 'expandible' === $settings['layout'] ) {
+											$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+										}
+							
+										$this->add_render_attribute(
+											'be-nav-menu',
+											'class',
+											[
+												'be-nav-menu__layout-' . $settings['layout'],
+												'be-nav-menu__submenu-' . $settings['submenu_icon'],
+											]
+										);
+							
+										$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+							
+										$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+							
+										$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+							
+										?>
+										<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+											<div class="be-nav-menu__toggle elementor-clickable">
+												<div class="be-nav-menu-icon">
+													<?php
+													if ( $this->is_elementor_updated() ) {
+														$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+														?>
+														<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } else { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } ?>
+												</div>
+											</div>
+											<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
+										</div>
+										<?php
+									}
+
+                            }
+                        }
+                    break;
+                    case 'role':
+                        $user_meta = get_userdata(get_current_user_id());
+						$user_roles=$user_meta->roles;
+                        // Check if the role you're interested in, is present in the array.
+						if($user_roles){
+							if ( in_array( 'administrator', $user_roles, true ) ) {
+								$user_role = 'administrator';
+							}else if(in_array( 'editor', $user_roles, true )){
+								$user_role = 'editor';
+							}else if(in_array( 'author', $user_roles, true )){
+								$user_role = 'author';
+							}else if(in_array( 'contributor', $user_roles, true )){
+								$user_role = 'contributor';
+							}else if(in_array( 'subscriber', $user_roles, true )){
+								$user_role = 'subscriber';
+							}
+						}
+
+                        if($item['is_not']=='is'){
+							if($item['user_role']==$user_role){
+                               // show original here
+							   if ( 'flyout' === $settings['layout'] ) {
+
+									$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+									if ( 'cta' === $settings['menu_last_item'] ) {
+						
+										$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+									}
+						
+									?>
+									<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+											<div class="be-nav-menu-icon">
+												<?php if ( $this->is_elementor_updated() ) { ?>
+													<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } else { ?>
+													<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } ?>
+											</div>
+										</div>
+									<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+										<div class="be-flyout-overlay elementor-clickable"></div>
+										<div class="be-flyout-container">
+											<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+												<div class="be-flyout-content push">						
+													<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+													<div class="elementor-clickable be-flyout-close" tabindex="0">
+														<?php if ( $this->is_elementor_updated() ) { ?>
+															<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+														<?php } else { ?>
+															<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+														<?php } ?>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>				
+									<?php
+								} else {
+									$this->add_render_attribute(
+										'be-main-menu',
+										'class',
+										[
+											'be-nav-menu',
+											'be-layout-' . $settings['layout'],
+										]
+									);
+						
+									$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+						
+									$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+						
+									$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+						
+									if ( 'cta' === $settings['menu_last_item'] ) {
+						
+										$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
+									}
+						
+									if ( $settings['pointer'] ) {
+										if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+											$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+						
+											if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+												$key = 'animation_line';
+												$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+											} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+												$key = 'animation_' . $settings['pointer'];
+												$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+											}
+										}
+									}
+						
+									if ( 'expandible' === $settings['layout'] ) {
+										$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+									}
+						
+									$this->add_render_attribute(
+										'be-nav-menu',
+										'class',
+										[
+											'be-nav-menu__layout-' . $settings['layout'],
+											'be-nav-menu__submenu-' . $settings['submenu_icon'],
+										]
+									);
+						
+									$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+						
+									$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+						
+									$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+						
+									?>
+									<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+										<div class="be-nav-menu__toggle elementor-clickable">
+											<div class="be-nav-menu-icon">
+												<?php
+												if ( $this->is_elementor_updated() ) {
+													$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+													?>
+													<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } else { ?>
+													<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+												<?php } ?>
+											</div>
+										</div>
+										<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
+									</div>
+									<?php
+								}
+                            }
+                            
+						}elseif($item['is_not']=='is_not'){
+							if($item['user_role']!=$user_role){
+                                // show original here
+								if ( 'flyout' === $settings['layout'] ) {
+
+										$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+										if ( 'cta' === $settings['menu_last_item'] ) {
+							
+											$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+										}
+							
+										?>
+										<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+												<div class="be-nav-menu-icon">
+													<?php if ( $this->is_elementor_updated() ) { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } else { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } ?>
+												</div>
+											</div>
+										<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+											<div class="be-flyout-overlay elementor-clickable"></div>
+											<div class="be-flyout-container">
+												<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+													<div class="be-flyout-content push">						
+														<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+														<div class="elementor-clickable be-flyout-close" tabindex="0">
+															<?php if ( $this->is_elementor_updated() ) { ?>
+																<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+															<?php } else { ?>
+																<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+															<?php } ?>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>				
+										<?php
+									} else {
+										$this->add_render_attribute(
+											'be-main-menu',
+											'class',
+											[
+												'be-nav-menu',
+												'be-layout-' . $settings['layout'],
+											]
+										);
+							
+										$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+							
+										$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+							
+										$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+							
+										if ( 'cta' === $settings['menu_last_item'] ) {
+							
+											$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
+										}
+							
+										if ( $settings['pointer'] ) {
+											if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+												$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+							
+												if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+													$key = 'animation_line';
+													$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+												} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+													$key = 'animation_' . $settings['pointer'];
+													$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+												}
+											}
+										}
+							
+										if ( 'expandible' === $settings['layout'] ) {
+											$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+										}
+							
+										$this->add_render_attribute(
+											'be-nav-menu',
+											'class',
+											[
+												'be-nav-menu__layout-' . $settings['layout'],
+												'be-nav-menu__submenu-' . $settings['submenu_icon'],
+											]
+										);
+							
+										$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+							
+										$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+							
+										$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+							
+										?>
+										<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+											<div class="be-nav-menu__toggle elementor-clickable">
+												<div class="be-nav-menu-icon">
+													<?php
+													if ( $this->is_elementor_updated() ) {
+														$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+														?>
+														<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } else { ?>
+														<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+													<?php } ?>
+												</div>
+											</div>
+											<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
+										</div>
+										<?php
+									}
+                                   
+                            }
+                        }
+
+                    break;
+                    default:
+                    echo $item['condition_key'].' condition need to set up';
+                    break;
+                }
+            }
+        }else{
+            //show original here
+			if ( 'flyout' === $settings['layout'] ) {
+
+					$this->add_render_attribute( 'be-flyout', 'class', 'be-flyout-wrapper' );
+					if ( 'cta' === $settings['menu_last_item'] ) {
+		
+						$this->add_render_attribute( 'be-flyout', 'data-last-item', $settings['menu_last_item'] );
+					}
+		
+					?>
+					<div class="be-nav-menu__toggle elementor-clickable be-flyout-trigger" tabindex="0">
+							<div class="be-nav-menu-icon">
 								<?php if ( $this->is_elementor_updated() ) { ?>
-									<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+									<i class="<?php echo esc_attr( $settings['dropdown_icon']['value'] ); ?>" aria-hidden="true" tabindex="0"></i>
 								<?php } else { ?>
-									<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+									<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
 								<?php } ?>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>				
-			<?php
-		} else {
-			$this->add_render_attribute(
-				'be-main-menu',
-				'class',
-				[
-					'be-nav-menu',
-					'be-layout-' . $settings['layout'],
-				]
-			);
-
-			$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
-
-			$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
-
-			$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
-
-			if ( 'cta' === $settings['menu_last_item'] ) {
-
-				$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
-			}
-
-			if ( $settings['pointer'] ) {
-				if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
-					$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
-
-					if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
-						$key = 'animation_line';
-						$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
-					} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
-						$key = 'animation_' . $settings['pointer'];
-						$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-flyout' ) ); ?> >
+						<div class="be-flyout-overlay elementor-clickable"></div>
+						<div class="be-flyout-container">
+							<div id="be-flyout-content-id-<?php echo esc_attr( $this->get_id() ); ?>" class="be-side be-flyout-<?php echo esc_attr( $settings['flyout_layout'] ); ?> be-flyout-open" data-width="<?php echo esc_attr( $settings['width_flyout_menu_item']['size'] ); ?>" data-layout="<?php echo wp_kses_post( $settings['flyout_layout'] ); ?>" data-flyout-type="<?php echo wp_kses_post( $settings['flyout_type'] ); ?>">
+								<div class="be-flyout-content push">						
+									<nav <?php echo wp_kses_post( $this->get_render_attribute_string( 'be-nav-menu' ) ); ?>><?php echo $menu_html; ?></nav>
+									<div class="elementor-clickable be-flyout-close" tabindex="0">
+										<?php if ( $this->is_elementor_updated() ) { ?>
+											<i class="<?php echo esc_attr( $settings['dropdown_close_icon']['value'] ); ?>" aria-hidden="true"></i>
+										<?php } else { ?>
+											<i class="<?php echo esc_attr( $settings['dropdown_close_icon'] ); ?>" aria-hidden="true"></i>
+										<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>				
+					<?php
+				} else {
+					$this->add_render_attribute(
+						'be-main-menu',
+						'class',
+						[
+							'be-nav-menu',
+							'be-layout-' . $settings['layout'],
+						]
+					);
+		
+					$this->add_render_attribute( 'be-main-menu', 'class', 'be-nav-menu-layout' );
+		
+					$this->add_render_attribute( 'be-main-menu', 'class', $settings['layout'] );
+		
+					$this->add_render_attribute( 'be-main-menu', 'data-layout', $settings['layout'] );
+		
+					if ( 'cta' === $settings['menu_last_item'] ) {
+		
+						$this->add_render_attribute( 'be-main-menu', 'data-last-item', $settings['menu_last_item'] );
 					}
-				}
-			}
-
-			if ( 'expandible' === $settings['layout'] ) {
-				$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
-			}
-
-			$this->add_render_attribute(
-				'be-nav-menu',
-				'class',
-				[
-					'be-nav-menu__layout-' . $settings['layout'],
-					'be-nav-menu__submenu-' . $settings['submenu_icon'],
-				]
-			);
-
-			$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
-
-			$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
-
-			$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
-
-			?>
-			<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
-				<div class="be-nav-menu__toggle elementor-clickable">
-					<div class="be-nav-menu-icon">
-						<?php
-						if ( $this->is_elementor_updated() ) {
-							$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
-							?>
-							<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
-						<?php } else { ?>
-							<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
-						<?php } ?>
+		
+					if ( $settings['pointer'] ) {
+						if ( 'horizontal' === $settings['layout'] || 'vertical' === $settings['layout'] ) {
+							$this->add_render_attribute( 'be-main-menu', 'class', 'be-pointer__' . $settings['pointer'] );
+		
+							if ( in_array( $settings['pointer'], [ 'double-line', 'underline', 'overline' ], true ) ) {
+								$key = 'animation_line';
+								$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+							} elseif ( 'framed' === $settings['pointer'] || 'text' === $settings['pointer'] ) {
+								$key = 'animation_' . $settings['pointer'];
+								$this->add_render_attribute( 'be-main-menu', 'class', 'be-animation__' . $settings[ $key ] );
+							}
+						}
+					}
+		
+					if ( 'expandible' === $settings['layout'] ) {
+						$this->add_render_attribute( 'be-nav-menu', 'class', 'be-dropdown-expandible' );
+					}
+		
+					$this->add_render_attribute(
+						'be-nav-menu',
+						'class',
+						[
+							'be-nav-menu__layout-' . $settings['layout'],
+							'be-nav-menu__submenu-' . $settings['submenu_icon'],
+						]
+					);
+		
+					$this->add_render_attribute( 'be-nav-menu', 'data-toggle-icon', $settings['dropdown_icon'] );
+		
+					$this->add_render_attribute( 'be-nav-menu', 'data-close-icon', $settings['dropdown_close_icon'] );
+		
+					$this->add_render_attribute( 'be-nav-menu', 'data-full-width', $settings['full_width_dropdown'] );
+		
+					?>
+					<div <?php echo $this->get_render_attribute_string( 'be-main-menu' ); ?>>
+						<div class="be-nav-menu__toggle elementor-clickable">
+							<div class="be-nav-menu-icon">
+								<?php
+								if ( $this->is_elementor_updated() ) {
+									$dropdown_icon_value = isset( $settings['dropdown_icon']['value'] ) ? $settings['dropdown_icon']['value'] : '';
+									?>
+									<i class="<?php echo esc_attr( $dropdown_icon_value ); ?>" aria-hidden="true" tabindex="0"></i>
+								<?php } else { ?>
+									<i class="<?php echo esc_attr( $settings['dropdown_icon'] ); ?>" aria-hidden="true" tabindex="0"></i>
+								<?php } ?>
+							</div>
+						</div>
+						<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
 					</div>
-				</div>
-				<nav <?php echo $this->get_render_attribute_string( 'be-nav-menu' ); ?>><?php echo $menu_html; ?></nav>              
-			</div>
-			<?php
+					<?php
+				}
+             
 		}
+		//end
+		
 	}
 }

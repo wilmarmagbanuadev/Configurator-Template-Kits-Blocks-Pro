@@ -11,6 +11,7 @@
  *
  */
 
+ defined( 'ABSPATH' ) || exit;
 
 define( 'Configurator_Template_Kits_Blocks_VERSION', '1.0.0' );
 
@@ -23,23 +24,25 @@ define( 'Configurator_Template_Kits_Blocks_URL', plugins_url( '/', Configurator_
 define( 'Configurator_Template_Kits_Blocks_ASSETS_URL', Configurator_Template_Kits_Blocks_URL . 'assets/' );
 define( 'Configurator_Template_Kits_Blocks_MODULES_URL', Configurator_Template_Kits_Blocks_URL . 'modules/' );
 
-define( 'Configurator_Template_Kits_SL_STORE_URL', 'https://wordpress-320165-1464446.cloudwaysapps.com/' );
+
 define( 'Configurator_Template_Kits_SL_ITEM_NAME', 'configurator-template-kits-blocks' );
-
-
-
+/**
+*global $validator;
+*require_once (plugin_dir_path(__FILE__) . 'admin/checker.php' ); 
+*include_once plugin_dir_path(__FILE__) . 'admin/checker.php';
+**/
 require_once (plugin_dir_path(__FILE__) . 'admin/admin-functions.php' ); 
 
 require_once ( Configurator_Template_Kits_Blocks_PATH . 'classes/class-menu-walker.php' );
 require_once (Configurator_Template_Kits_Blocks_PATH . 'includes/class-configurator-template-kits-blocks-hft-builder.php');
 require_once (Configurator_Template_Kits_Blocks_PATH . 'includes/helper-functions.php');
-// check if free is installed
+
 
 
 // add action
-add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'configurator_template_kits_blocks__pro_action_links' );
- $license_url = 'sample';
+//add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'configurator_template_kits_blocks__pro_action_links' );
+
 function configurator_template_kits_blocks__pro_action_links( $actions ) {
-   $actions[] = '<a href="admin.php?page=configurator_template_kits_blocks-license" target="_blank">License</a>';
+   $actions[] = '<a href="admin.php?page=configurator-template-kits-blocks-license" target="_blank">License</a>';
    return $actions;
 }

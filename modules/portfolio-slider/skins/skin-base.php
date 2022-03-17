@@ -699,62 +699,463 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			'blank-portfolio-slider-' . $settings['_skin'],
 			]
 		);
-		
-        ?>
-        <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+        // wrap  orginal to variable
+        if($settings['configurator_block_condition']=='yes'){
+            foreach (  $settings['condition_list'] as $item ) {
+                switch ($item['condition_key']) {
+                    case 'authentication':
+                        if($item['is_not']=='is' && is_user_logged_in()){
+                          // show original here
+                          ?>
+                            <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                                <?php
+                                    $pcount = 1;
+
+                                    // Post Authors
+                                    $bb_post_author = '';
+                                    $bb_post_authors = $settings['authors'];
+                                    if ( !empty( $bb_post_authors) ) {
+                                        $bb_post_author = implode( ",", $bb_post_authors );
+                                    }
+
+                                    // Post Categories
+                                    $pa_tiled_post_cat = '';
+                                    $pa_tiled_post_cats = $settings['categories'];
+                                    if ( !empty( $pa_tiled_post_cats) ) {
+                                        $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                                    }
+
+                                    // Query Arguments
+                                    $args = array(
+                                        'post_status'           => 'publish',
+                                        'post_type'             => $settings['post_type'],
+                                        'post__in'              => '',
+                                        'cat'                   => $pa_tiled_post_cat,
+                                        'author'                => $bb_post_author,
+                                        'tag__in'               => $settings['tags'],
+                                        'orderby'               => $settings['orderby'],
+                                        'order'                 => $settings['order'],
+                                        'post__not_in'          => $settings['exclude_posts'],
+                                        'offset'                => $settings['offset'],
+                                        'ignore_sticky_posts'   => 1,
+                                        'showposts'             => $settings['post_count'],
+                                    );
+                                    $bb_grid_query = new \WP_Query( $args );
+
+                                    if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+                            
+                                        $this->render_post_body( $pcount );
+
+                                        $pcount++;
+                                    endwhile;
+                                    wp_reset_postdata();
+                                    endif;
+                                    ?>
+                            </div>
+                            <div class="slider-progress">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="blank-progress-round">
+                                <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                                <svg class="progress">
+                                    <circle r="23" cx="23" cy="23"/>
+                                </svg>
+                        </div>
+                            <?php
+                        }elseif($item['is_not']=='is_not' && !is_user_logged_in()){
+                           // show original here
+                           ?>
+                            <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                                <?php
+                                    $pcount = 1;
+
+                                    // Post Authors
+                                    $bb_post_author = '';
+                                    $bb_post_authors = $settings['authors'];
+                                    if ( !empty( $bb_post_authors) ) {
+                                        $bb_post_author = implode( ",", $bb_post_authors );
+                                    }
+
+                                    // Post Categories
+                                    $pa_tiled_post_cat = '';
+                                    $pa_tiled_post_cats = $settings['categories'];
+                                    if ( !empty( $pa_tiled_post_cats) ) {
+                                        $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                                    }
+
+                                    // Query Arguments
+                                    $args = array(
+                                        'post_status'           => 'publish',
+                                        'post_type'             => $settings['post_type'],
+                                        'post__in'              => '',
+                                        'cat'                   => $pa_tiled_post_cat,
+                                        'author'                => $bb_post_author,
+                                        'tag__in'               => $settings['tags'],
+                                        'orderby'               => $settings['orderby'],
+                                        'order'                 => $settings['order'],
+                                        'post__not_in'          => $settings['exclude_posts'],
+                                        'offset'                => $settings['offset'],
+                                        'ignore_sticky_posts'   => 1,
+                                        'showposts'             => $settings['post_count'],
+                                    );
+                                    $bb_grid_query = new \WP_Query( $args );
+
+                                    if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+                            
+                                        $this->render_post_body( $pcount );
+
+                                        $pcount++;
+                                    endwhile;
+                                    wp_reset_postdata();
+                                    endif;
+                                    ?>
+                            </div>
+                            <div class="slider-progress">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="blank-progress-round">
+                                <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                                <svg class="progress">
+                                    <circle r="23" cx="23" cy="23"/>
+                                </svg>
+                        </div>
+                            <?php
+                        }
+                    break;
+                    case 'user':
+                        global $current_user;
+                        wp_get_current_user();
+                        $current_user = $current_user->user_login;
+                        if($item['is_not']=='is'){
+                            if($current_user==$item['current_user']){
+                               // show original here
+                               ?>
+                                <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                                    <?php
+                                        $pcount = 1;
+
+                                        // Post Authors
+                                        $bb_post_author = '';
+                                        $bb_post_authors = $settings['authors'];
+                                        if ( !empty( $bb_post_authors) ) {
+                                            $bb_post_author = implode( ",", $bb_post_authors );
+                                        }
+
+                                        // Post Categories
+                                        $pa_tiled_post_cat = '';
+                                        $pa_tiled_post_cats = $settings['categories'];
+                                        if ( !empty( $pa_tiled_post_cats) ) {
+                                            $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                                        }
+
+                                        // Query Arguments
+                                        $args = array(
+                                            'post_status'           => 'publish',
+                                            'post_type'             => $settings['post_type'],
+                                            'post__in'              => '',
+                                            'cat'                   => $pa_tiled_post_cat,
+                                            'author'                => $bb_post_author,
+                                            'tag__in'               => $settings['tags'],
+                                            'orderby'               => $settings['orderby'],
+                                            'order'                 => $settings['order'],
+                                            'post__not_in'          => $settings['exclude_posts'],
+                                            'offset'                => $settings['offset'],
+                                            'ignore_sticky_posts'   => 1,
+                                            'showposts'             => $settings['post_count'],
+                                        );
+                                        $bb_grid_query = new \WP_Query( $args );
+
+                                        if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+                                
+                                            $this->render_post_body( $pcount );
+
+                                            $pcount++;
+                                        endwhile;
+                                        wp_reset_postdata();
+                                        endif;
+                                        ?>
+                                </div>
+                                <div class="slider-progress">
+                                    <div class="progress"></div>
+                                </div>
+                                <div class="blank-progress-round">
+                                    <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                                    <svg class="progress">
+                                        <circle r="23" cx="23" cy="23"/>
+                                    </svg>
+                            </div>
+                                <?php
+                            }
+                        }elseif($item['is_not']=='is_not'){
+                            if($current_user!=$item['current_user']){
+                                // show original here
+                                ?>
+                                <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                                    <?php
+                                        $pcount = 1;
+
+                                        // Post Authors
+                                        $bb_post_author = '';
+                                        $bb_post_authors = $settings['authors'];
+                                        if ( !empty( $bb_post_authors) ) {
+                                            $bb_post_author = implode( ",", $bb_post_authors );
+                                        }
+
+                                        // Post Categories
+                                        $pa_tiled_post_cat = '';
+                                        $pa_tiled_post_cats = $settings['categories'];
+                                        if ( !empty( $pa_tiled_post_cats) ) {
+                                            $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                                        }
+
+                                        // Query Arguments
+                                        $args = array(
+                                            'post_status'           => 'publish',
+                                            'post_type'             => $settings['post_type'],
+                                            'post__in'              => '',
+                                            'cat'                   => $pa_tiled_post_cat,
+                                            'author'                => $bb_post_author,
+                                            'tag__in'               => $settings['tags'],
+                                            'orderby'               => $settings['orderby'],
+                                            'order'                 => $settings['order'],
+                                            'post__not_in'          => $settings['exclude_posts'],
+                                            'offset'                => $settings['offset'],
+                                            'ignore_sticky_posts'   => 1,
+                                            'showposts'             => $settings['post_count'],
+                                        );
+                                        $bb_grid_query = new \WP_Query( $args );
+
+                                        if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+                                
+                                            $this->render_post_body( $pcount );
+
+                                            $pcount++;
+                                        endwhile;
+                                        wp_reset_postdata();
+                                        endif;
+                                        ?>
+                                </div>
+                                <div class="slider-progress">
+                                    <div class="progress"></div>
+                                </div>
+                                <div class="blank-progress-round">
+                                    <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                                    <svg class="progress">
+                                        <circle r="23" cx="23" cy="23"/>
+                                    </svg>
+                            </div>
+                                <?php
+                            }
+                        }
+                    break;
+                    case 'role':
+                        $user_meta = get_userdata(get_current_user_id());
+						$user_roles=$user_meta->roles;
+                        // Check if the role you're interested in, is present in the array.
+						if($user_roles){
+							if ( in_array( 'administrator', $user_roles, true ) ) {
+								$user_role = 'administrator';
+							}else if(in_array( 'editor', $user_roles, true )){
+								$user_role = 'editor';
+							}else if(in_array( 'author', $user_roles, true )){
+								$user_role = 'author';
+							}else if(in_array( 'contributor', $user_roles, true )){
+								$user_role = 'contributor';
+							}else if(in_array( 'subscriber', $user_roles, true )){
+								$user_role = 'subscriber';
+							}
+						}
+
+                        if($item['is_not']=='is'){
+							if($item['user_role']==$user_role){
+                               // show original here
+                               ?>
+                                <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                                    <?php
+                                        $pcount = 1;
+
+                                        // Post Authors
+                                        $bb_post_author = '';
+                                        $bb_post_authors = $settings['authors'];
+                                        if ( !empty( $bb_post_authors) ) {
+                                            $bb_post_author = implode( ",", $bb_post_authors );
+                                        }
+
+                                        // Post Categories
+                                        $pa_tiled_post_cat = '';
+                                        $pa_tiled_post_cats = $settings['categories'];
+                                        if ( !empty( $pa_tiled_post_cats) ) {
+                                            $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                                        }
+
+                                        // Query Arguments
+                                        $args = array(
+                                            'post_status'           => 'publish',
+                                            'post_type'             => $settings['post_type'],
+                                            'post__in'              => '',
+                                            'cat'                   => $pa_tiled_post_cat,
+                                            'author'                => $bb_post_author,
+                                            'tag__in'               => $settings['tags'],
+                                            'orderby'               => $settings['orderby'],
+                                            'order'                 => $settings['order'],
+                                            'post__not_in'          => $settings['exclude_posts'],
+                                            'offset'                => $settings['offset'],
+                                            'ignore_sticky_posts'   => 1,
+                                            'showposts'             => $settings['post_count'],
+                                        );
+                                        $bb_grid_query = new \WP_Query( $args );
+
+                                        if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+                                
+                                            $this->render_post_body( $pcount );
+
+                                            $pcount++;
+                                        endwhile;
+                                        wp_reset_postdata();
+                                        endif;
+                                        ?>
+                                </div>
+                                <div class="slider-progress">
+                                    <div class="progress"></div>
+                                </div>
+                                <div class="blank-progress-round">
+                                    <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                                    <svg class="progress">
+                                        <circle r="23" cx="23" cy="23"/>
+                                    </svg>
+                            </div>
+                                <?php
+                            }
+                            
+						}elseif($item['is_not']=='is_not'){
+							if($item['user_role']!=$user_role){
+                                // show original here
+                                ?>
+                                <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                                    <?php
+                                        $pcount = 1;
+
+                                        // Post Authors
+                                        $bb_post_author = '';
+                                        $bb_post_authors = $settings['authors'];
+                                        if ( !empty( $bb_post_authors) ) {
+                                            $bb_post_author = implode( ",", $bb_post_authors );
+                                        }
+
+                                        // Post Categories
+                                        $pa_tiled_post_cat = '';
+                                        $pa_tiled_post_cats = $settings['categories'];
+                                        if ( !empty( $pa_tiled_post_cats) ) {
+                                            $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                                        }
+
+                                        // Query Arguments
+                                        $args = array(
+                                            'post_status'           => 'publish',
+                                            'post_type'             => $settings['post_type'],
+                                            'post__in'              => '',
+                                            'cat'                   => $pa_tiled_post_cat,
+                                            'author'                => $bb_post_author,
+                                            'tag__in'               => $settings['tags'],
+                                            'orderby'               => $settings['orderby'],
+                                            'order'                 => $settings['order'],
+                                            'post__not_in'          => $settings['exclude_posts'],
+                                            'offset'                => $settings['offset'],
+                                            'ignore_sticky_posts'   => 1,
+                                            'showposts'             => $settings['post_count'],
+                                        );
+                                        $bb_grid_query = new \WP_Query( $args );
+
+                                        if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+                                
+                                            $this->render_post_body( $pcount );
+
+                                            $pcount++;
+                                        endwhile;
+                                        wp_reset_postdata();
+                                        endif;
+                                        ?>
+                                </div>
+                                <div class="slider-progress">
+                                    <div class="progress"></div>
+                                </div>
+                                <div class="blank-progress-round">
+                                    <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                                    <svg class="progress">
+                                        <circle r="23" cx="23" cy="23"/>
+                                    </svg>
+                            </div>
+                                <?php
+                                   
+                            }
+                        }
+
+                    break;
+                    default:
+                    echo $item['condition_key'].' condition need to set up';
+                    break;
+                }
+            }
+        }else{
+            //show original here
+
+            ?>
+            <div <?php echo $this->parent->get_render_attribute_string( 'slider' ) ?>>
+                <?php
+                    $pcount = 1;
+    
+                    // Post Authors
+                    $bb_post_author = '';
+                    $bb_post_authors = $settings['authors'];
+                    if ( !empty( $bb_post_authors) ) {
+                        $bb_post_author = implode( ",", $bb_post_authors );
+                    }
+    
+                    // Post Categories
+                    $pa_tiled_post_cat = '';
+                    $pa_tiled_post_cats = $settings['categories'];
+                    if ( !empty( $pa_tiled_post_cats) ) {
+                        $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
+                    }
+    
+                    // Query Arguments
+                    $args = array(
+                        'post_status'           => 'publish',
+                        'post_type'             => $settings['post_type'],
+                        'post__in'              => '',
+                        'cat'                   => $pa_tiled_post_cat,
+                        'author'                => $bb_post_author,
+                        'tag__in'               => $settings['tags'],
+                        'orderby'               => $settings['orderby'],
+                        'order'                 => $settings['order'],
+                        'post__not_in'          => $settings['exclude_posts'],
+                        'offset'                => $settings['offset'],
+                        'ignore_sticky_posts'   => 1,
+                        'showposts'             => $settings['post_count'],
+                    );
+                    $bb_grid_query = new \WP_Query( $args );
+    
+                    if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
+            
+                        $this->render_post_body( $pcount );
+    
+                        $pcount++;
+                    endwhile;
+                    wp_reset_postdata();
+                    endif;
+                    ?>
+            </div>
+            <div class="slider-progress">
+                <div class="progress"></div>
+            </div>
+            <div class="blank-progress-round">
+                <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
+                <svg class="progress">
+                    <circle r="23" cx="23" cy="23"/>
+                </svg>
+          </div>
             <?php
-                $pcount = 1;
-
-                // Post Authors
-                $bb_post_author = '';
-                $bb_post_authors = $settings['authors'];
-                if ( !empty( $bb_post_authors) ) {
-                    $bb_post_author = implode( ",", $bb_post_authors );
-                }
-
-                // Post Categories
-                $pa_tiled_post_cat = '';
-                $pa_tiled_post_cats = $settings['categories'];
-                if ( !empty( $pa_tiled_post_cats) ) {
-                    $pa_tiled_post_cat = implode( ",", $pa_tiled_post_cats );
-                }
-
-                // Query Arguments
-                $args = array(
-                    'post_status'           => 'publish',
-                    'post_type'             => $settings['post_type'],
-                    'post__in'              => '',
-                    'cat'                   => $pa_tiled_post_cat,
-                    'author'                => $bb_post_author,
-                    'tag__in'               => $settings['tags'],
-                    'orderby'               => $settings['orderby'],
-                    'order'                 => $settings['order'],
-                    'post__not_in'          => $settings['exclude_posts'],
-                    'offset'                => $settings['offset'],
-                    'ignore_sticky_posts'   => 1,
-                    'showposts'             => $settings['post_count'],
-                );
-                $bb_grid_query = new \WP_Query( $args );
-
-                if ( $bb_grid_query->have_posts() ) : while ( $bb_grid_query->have_posts() ) : $bb_grid_query->the_post();
-		
-					$this->render_post_body( $pcount );
-
-                    $pcount++;
-                endwhile;
-                wp_reset_postdata();
-                endif;
-                ?>
-        </div>
-        <div class="slider-progress">
-            <div class="progress"></div>
-        </div>
-        <div class="blank-progress-round">
-            <span class="slider-progress-title"><?php esc_html_e('Next','blank-elements'); ?></span>
-            <svg class="progress">
-                <circle r="23" cx="23" cy="23"/>
-            </svg>
-      </div>
-        <?php
+		}
+        
     }
 }

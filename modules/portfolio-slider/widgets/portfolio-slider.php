@@ -28,7 +28,7 @@ class Portfolio_Slider extends Posts_Slider_Base {
     }
 
     public function get_categories() {
-        return [ 'blank-elements-widgets' ];
+        return [ 'configurator-template-kits-blocks-pro-widgets' ];
     }
 
     public function get_icon() {

@@ -12,6 +12,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Scheme_Typography;
 use Elementor\Scheme_Color;
 use Elementor\Widget_Base;
+use Elementor\Repeater;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,7 +29,7 @@ class Breadcrumbs extends Widget_Base {
 	}
 
 	public function get_title() {
-		return __( 'Breadcrumbs', 'blank-elements' );
+		return __( 'Breadcrumbs', 'configurator-blocks' );
 	}
 
 	public function get_icon() {
@@ -36,7 +37,7 @@ class Breadcrumbs extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'blank-elements-widgets'];
+		return [ 'configurator-template-kits-blocks-widgets'];
 	}
 
     public function get_script_depends() {
@@ -65,23 +66,23 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_section(
             'section_breadcrumbs',
             [
-                'label'                 => __( 'Breadcrumbs', 'blank-elements' ),
+                'label'                 => __( 'Breadcrumbs', 'configurator-blocks' ),
             ]
         );
 
         $this->add_control(
             'breadcrumbs_type',
             [
-                'label'                 => __( 'Select Type', 'blank-elements' ),
+                'label'                 => __( 'Select Type', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::SELECT,
-                'default'               => 'blank-elements',
+                'default'               => 'configurator-blocks',
                 'frontend_available'    => true,
                 'options'               => [
-                    'blank-elements'		=> __( 'blank-elements', 'blank-elements' ),
-                    'yoast'			=> __( 'Yoast', 'blank-elements' ),
-                    'rankmath'		=> __( 'Rank Math SEO', 'blank-elements' ),
-                    'navxt'			=> __( 'Breadcrumb NavXT', 'blank-elements' ),
-                    'seopress'		=> __( 'SEOPress', 'blank-elements' ),
+                    'configurator-blocks'		=> __( 'Configurator Block Pro', 'configurator-blocks' ),
+                    'yoast'			=> __( 'Yoast', 'configurator-blocks' ),
+                    'rankmath'		=> __( 'Rank Math SEO', 'configurator-blocks' ),
+                    'navxt'			=> __( 'Breadcrumb NavXT', 'configurator-blocks' ),
+                    'seopress'		=> __( 'SEOPress', 'configurator-blocks' ),
                 ],
             ]
         );
@@ -89,14 +90,14 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'show_home',
             [
-                'label'                 => __( 'Show Home', 'blank-elements' ),
+                'label'                 => __( 'Show Home', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::SWITCHER,
                 'default'               => 'yes',
-                'label_on'              => __( 'On', 'blank-elements' ),
-                'label_off'             => __( 'Off', 'blank-elements' ),
+                'label_on'              => __( 'On', 'configurator-blocks' ),
+                'label_off'             => __( 'Off', 'configurator-blocks' ),
                 'return_value'          => 'yes',
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -104,15 +105,15 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'home_text',
             [
-                'label'                 => __( 'Home Text', 'blank-elements' ),
+                'label'                 => __( 'Home Text', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::TEXT,
-                'default'               => __( 'Home', 'blank-elements' ),
+                'default'               => __( 'Home', 'configurator-blocks' ),
                 'dynamic'               => [
                     'active'        => true,
                     'categories'    => [ TagsModule::POST_META_CATEGORY ]
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements',
+                    'breadcrumbs_type'	=> 'configurator-blocks',
                     'show_home'			=> 'yes'
                 ],
             ]
@@ -121,7 +122,7 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_control(
 			'select_home_icon',
 			[
-				'label'					=> __( 'Home Icon', 'blank-elements' ),
+				'label'					=> __( 'Home Icon', 'configurator-blocks' ),
 				'type'					=> Controls_Manager::ICONS,
 				'label_block'			=> false,
 				'skin'					=> 'inline',
@@ -131,7 +132,7 @@ class Breadcrumbs extends Widget_Base {
 					'library'	=> 'fa-solid',
 				],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements',
+                    'breadcrumbs_type'	=> 'configurator-blocks',
                     'show_home'			=> 'yes'
                 ],
 			]
@@ -140,15 +141,15 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'blog_text',
             [
-                'label'                 => __( 'Blog Text', 'blank-elements' ),
+                'label'                 => __( 'Blog Text', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::TEXT,
-                'default'               => __( 'Blog', 'blank-elements' ),
+                'default'               => __( 'Blog', 'configurator-blocks' ),
                 'dynamic'               => [
                     'active'        => true,
                     'categories'    => [ TagsModule::POST_META_CATEGORY ]
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -156,20 +157,20 @@ class Breadcrumbs extends Widget_Base {
         $this->add_responsive_control(
 			'align',
 			[
-				'label'                 => __( 'Alignment', 'blank-elements' ),
+				'label'                 => __( 'Alignment', 'configurator-blocks' ),
 				'type'                  => Controls_Manager::CHOOSE,
 				'default'               => '',
 				'options'               => [
                     'left'      => [
-                        'title' => __( 'Left', 'blank-elements' ),
+                        'title' => __( 'Left', 'configurator-blocks' ),
                         'icon'  => 'eicon-h-align-left',
                     ],
                     'center'    => [
-                        'title' => __( 'Center', 'blank-elements' ),
+                        'title' => __( 'Center', 'configurator-blocks' ),
                         'icon'  => 'eicon-h-align-center',
                     ],
                     'right'     => [
-                        'title' => __( 'Right', 'blank-elements' ),
+                        'title' => __( 'Right', 'configurator-blocks' ),
                         'icon'  => 'eicon-h-align-right',
                     ],
 				],
@@ -194,9 +195,9 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_section(
             'section_separator',
             [
-                'label'                 => __( 'Separator', 'blank-elements' ),
+                'label'                 => __( 'Separator', 'configurator-blocks' ),
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -204,15 +205,15 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'separator_type',
             [
-                'label'                 => __( 'Separator Type', 'blank-elements' ),
+                'label'                 => __( 'Separator Type', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::SELECT,
                 'default'               => 'icon',
                 'options'               => [
-                    'text'          => __( 'Text', 'blank-elements' ),
-                    'icon'          => __( 'Icon', 'blank-elements' ),
+                    'text'          => __( 'Text', 'configurator-blocks' ),
+                    'icon'          => __( 'Icon', 'configurator-blocks' ),
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -220,11 +221,11 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'separator_text',
             [
-                'label'                 => __( 'Separator', 'blank-elements' ),
+                'label'                 => __( 'Separator', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::TEXT,
-                'default'               => __( '>', 'blank-elements' ),
+                'default'               => __( '>', 'configurator-blocks' ),
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements',
+                    'breadcrumbs_type'	=> 'configurator-blocks',
                     'separator_type'    => 'text'
                 ],
             ]
@@ -233,7 +234,7 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_control(
 			'select_separator_icon',
 			[
-				'label'					=> __( 'Separator', 'blank-elements' ),
+				'label'					=> __( 'Separator', 'configurator-blocks' ),
 				'type'					=> Controls_Manager::ICONS,
 				'label_block'			=> false,
 				'skin'					=> 'inline',
@@ -264,7 +265,7 @@ class Breadcrumbs extends Widget_Base {
 					],
 				],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements',
+                    'breadcrumbs_type'	=> 'configurator-blocks',
                     'separator_type'    => 'icon'
                 ],
 			]
@@ -283,7 +284,7 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_section(
             'section_breadcrumbs_style',
             [
-                'label'                 => __( 'Items', 'blank-elements' ),
+                'label'                 => __( 'Items', 'configurator-blocks' ),
                 'tab'                   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -291,7 +292,7 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'breadcrumbs_items_spacing',
             [
-                'label'                 => __( 'Spacing', 'blank-elements' ),
+                'label'                 => __( 'Spacing', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::SLIDER,
                 'default'               => [
                     'size'	=> 10
@@ -313,14 +314,14 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_tab(
             'tab_breadcrumbs_normal',
             [
-                'label'                 => __( 'Normal', 'blank-elements' ),
+                'label'                 => __( 'Normal', 'configurator-blocks' ),
             ]
         );
 
         $this->add_control(
             'breadcrumbs_color',
             [
-                'label'                 => __( 'Color', 'blank-elements' ),
+                'label'                 => __( 'Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
@@ -333,7 +334,7 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'breadcrumbs_background_color',
             [
-                'label'                 => __( 'Background Color', 'blank-elements' ),
+                'label'                 => __( 'Background Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
@@ -346,7 +347,7 @@ class Breadcrumbs extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'                  => 'breadcrumbs_typography',
-                'label'                 => __( 'Typography', 'blank-elements' ),
+                'label'                 => __( 'Typography', 'configurator-blocks' ),
                 'selector'              => '{{WRAPPER}} .be-breadcrumbs-crumb, {{WRAPPER}} .be-breadcrumbs:not(.be-breadcrumbs-powerpack) a, {{WRAPPER}} .be-breadcrumbs:not(.be-breadcrumbs-powerpack) span:not(.separator)',
             ]
         );
@@ -355,7 +356,7 @@ class Breadcrumbs extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'                  => 'breadcrumbs_border',
-				'label'                 => __( 'Border', 'blank-elements' ),
+				'label'                 => __( 'Border', 'configurator-blocks' ),
 				'placeholder'           => '1px',
 				'default'               => '1px',
 				'selector'              => '{{WRAPPER}} .be-breadcrumbs-crumb, {{WRAPPER}} .be-breadcrumbs:not(.be-breadcrumbs-powerpack) a, {{WRAPPER}} .be-breadcrumbs:not(.be-breadcrumbs-powerpack) span:not(.separator)',
@@ -365,7 +366,7 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_control(
 			'breadcrumbs_border_radius',
 			[
-				'label'                 => __( 'Border Radius', 'blank-elements' ),
+				'label'                 => __( 'Border Radius', 'configurator-blocks' ),
 				'type'                  => Controls_Manager::DIMENSIONS,
 				'size_units'            => [ 'px', '%' ],
 				'selectors'             => [
@@ -379,14 +380,14 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_tab(
             'tab_breadcrumbs_hover',
             [
-                'label'                 => __( 'Hover', 'blank-elements' ),
+                'label'                 => __( 'Hover', 'configurator-blocks' ),
             ]
         );
 
         $this->add_control(
             'breadcrumbs_color_hover',
             [
-                'label'                 => __( 'Color', 'blank-elements' ),
+                'label'                 => __( 'Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
@@ -399,7 +400,7 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'breadcrumbs_background_color_hover',
             [
-                'label'                 => __( 'Background Color', 'blank-elements' ),
+                'label'                 => __( 'Background Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
@@ -411,7 +412,7 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'breadcrumbs_border_color_hover',
             [
-                'label'                 => __( 'Border Color', 'blank-elements' ),
+                'label'                 => __( 'Border Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
@@ -427,7 +428,7 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_responsive_control(
 			'breadcrumbs_padding',
 			[
-				'label'                 => __( 'Padding', 'blank-elements' ),
+				'label'                 => __( 'Padding', 'configurator-blocks' ),
 				'type'                  => Controls_Manager::DIMENSIONS,
 				'size_units'            => [ 'px', '%' ],
                 'separator'             => 'before',
@@ -446,10 +447,10 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_section(
             'section_separators_style',
             [
-                'label'                 => __( 'Separators', 'blank-elements' ),
+                'label'                 => __( 'Separators', 'configurator-blocks' ),
                 'tab'                   => Controls_Manager::TAB_STYLE,
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -457,7 +458,7 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'separators_color',
             [
-                'label'                 => __( 'Color', 'blank-elements' ),
+                'label'                 => __( 'Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
@@ -465,7 +466,7 @@ class Breadcrumbs extends Widget_Base {
                     '{{WRAPPER}} .be-breadcrumbs-separator svg' => 'fill: {{VALUE}}',
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -473,14 +474,14 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'separators_background_color',
             [
-                'label'                 => __( 'Background Color', 'blank-elements' ),
+                'label'                 => __( 'Background Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
                     '{{WRAPPER}} .be-breadcrumbs-separator' => 'background-color: {{VALUE}}',
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -489,10 +490,10 @@ class Breadcrumbs extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'                  => 'separators_typography',
-                'label'                 => __( 'Typography', 'blank-elements' ),
+                'label'                 => __( 'Typography', 'configurator-blocks' ),
                 'selector'              => '{{WRAPPER}} .be-breadcrumbs-separator',
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -501,12 +502,12 @@ class Breadcrumbs extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'                  => 'separators_border',
-				'label'                 => __( 'Border', 'blank-elements' ),
+				'label'                 => __( 'Border', 'configurator-blocks' ),
 				'placeholder'           => '1px',
 				'default'               => '1px',
 				'selector'              => '{{WRAPPER}} .be-breadcrumbs-separator',
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
 			]
 		);
@@ -514,14 +515,14 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_control(
 			'separators_border_radius',
 			[
-				'label'                 => __( 'Border Radius', 'blank-elements' ),
+				'label'                 => __( 'Border Radius', 'configurator-blocks' ),
 				'type'                  => Controls_Manager::DIMENSIONS,
 				'size_units'            => [ 'px', '%' ],
 				'selectors'             => [
 					'{{WRAPPER}} .be-breadcrumbs-separator' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
 			]
 		);
@@ -529,14 +530,14 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_responsive_control(
 			'separators_padding',
 			[
-				'label'                 => __( 'Padding', 'blank-elements' ),
+				'label'                 => __( 'Padding', 'configurator-blocks' ),
 				'type'                  => Controls_Manager::DIMENSIONS,
 				'size_units'            => [ 'px', '%' ],
 				'selectors'             => [
 					'{{WRAPPER}} .be-breadcrumbs-separator' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
 			]
 		);
@@ -550,10 +551,10 @@ class Breadcrumbs extends Widget_Base {
         $this->start_controls_section(
             'section_current_style',
             [
-                'label'                 => __( 'Current', 'blank-elements' ),
+                'label'                 => __( 'Current', 'configurator-blocks' ),
                 'tab'                   => Controls_Manager::TAB_STYLE,
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -561,14 +562,14 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'current_color',
             [
-                'label'                 => __( 'Color', 'blank-elements' ),
+                'label'                 => __( 'Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
                     '{{WRAPPER}} .be-breadcrumbs-crumb-current' => 'color: {{VALUE}}',
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -576,14 +577,14 @@ class Breadcrumbs extends Widget_Base {
         $this->add_control(
             'current_background_color',
             [
-                'label'                 => __( 'Background Color', 'blank-elements' ),
+                'label'                 => __( 'Background Color', 'configurator-blocks' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '',
                 'selectors'             => [
                     '{{WRAPPER}} .be-breadcrumbs-crumb-current' => 'background-color: {{VALUE}}',
                 ],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -592,10 +593,10 @@ class Breadcrumbs extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'                  => 'current_typography',
-                'label'                 => __( 'Typography', 'blank-elements' ),
+                'label'                 => __( 'Typography', 'configurator-blocks' ),
                 'selector'              => '{{WRAPPER}} .be-breadcrumbs-crumb-current',
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
             ]
         );
@@ -604,12 +605,12 @@ class Breadcrumbs extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'                  => 'current_border',
-				'label'                 => __( 'Border', 'blank-elements' ),
+				'label'                 => __( 'Border', 'configurator-blocks' ),
 				'placeholder'           => '1px',
 				'default'               => '1px',
 				'selector'              => '{{WRAPPER}} .be-breadcrumbs-crumb-current',
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
 			]
 		);
@@ -617,20 +618,148 @@ class Breadcrumbs extends Widget_Base {
 		$this->add_control(
 			'current_border_radius',
 			[
-				'label'                 => __( 'Border Radius', 'blank-elements' ),
+				'label'                 => __( 'Border Radius', 'configurator-blocks' ),
 				'type'                  => Controls_Manager::DIMENSIONS,
 				'size_units'            => [ 'px', '%' ],
 				'selectors'             => [
 					'{{WRAPPER}} .be-breadcrumbs-crumb-current' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
                 'condition'             => [
-                    'breadcrumbs_type'	=> 'blank-elements'
+                    'breadcrumbs_type'	=> 'configurator-blocks'
                 ],
 			]
 		);
 
         $this->end_controls_section();
 
+        // add advance Display Conditions
+		$this->start_controls_section(
+			'configurator_block_advanced',
+                [
+                    'label' => __( 'Configurator Block Rule', 'configurator-blocks' ),
+                    'tab' => Controls_Manager::TAB_ADVANCED,
+                ]
+            );
+            $this->add_control(
+                'configurator_block_condition',
+                [
+                    'label' => __( 'Rule Condition', 'configurator-blocks' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'options' => [
+                        'yes' => __( 'Yes', 'configurator-blocks' ),
+                        'no' => __( 'No', 'configurator-blocks' ),
+                    ],
+                    'default' => 'no'
+                ]
+            );
+            $repeater = new Repeater();
+
+            $repeater->add_control(
+                'condition_key',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authentication',
+                    'show_label' => false,
+                    'options' => [
+                        // User
+                        'authentication'  =>__( 'Login Status', 'configurator-blocks' ),
+                        'user'  =>__( 'Current User', 'configurator-blocks' ),
+                        'role'  =>__( 'User Role', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_not',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'is',
+                    'show_label' => false,
+                    'options' => [
+                        'is'  =>__( 'Is', 'configurator-blocks' ),
+                        'is_not'  =>__( 'Is Not', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'is_login',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'authenticated',
+                    'condition' => [
+                        'condition_key' => 'authentication'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'authenticated'  =>__( 'Logged in', 'configurator-blocks' ),
+                    ],	
+            
+                ]
+            );
+            $repeater->add_control(
+                'current_user',
+                [
+                    'type' => Controls_Manager::TEXT,
+                    'label_block'=>true,
+                    'condition' => [
+                        'condition_key' => 'user'
+                    ],
+                    'show_label' => false,
+                    'placeholder' => __( 'Current User', 'configurator-blocks' ),
+            
+                ]
+            );
+    
+            $repeater->add_control(
+                'user_role',
+                [
+                    'type' => Controls_Manager::SELECT,
+                    'label_block'=>true,
+                    'default' => 'subscriber',
+                    'condition' => [
+                        'condition_key' => 'role'
+                    ],
+                    'show_label' => false,
+                    'options' => [
+                        'administrator'  =>__( 'Administrator', 'configurator-blocks' ),
+                        'editor'  =>__( 'Editor', 'configurator-blocks' ),
+                        'author'  =>__( 'Author', 'configurator-blocks' ),
+                        'contributor'  =>__( 'Contributor', 'configurator-blocks' ),
+                        'subscriber'  =>__( 'Subscriber', 'configurator-blocks' )
+                    ],	
+            
+                ]
+            );
+    
+            $this->add_control(
+                
+                'condition_list',
+                [
+                    'label' => __( '', 'configurator-blocks' ),
+                    'type' => Controls_Manager::REPEATER,
+                    'condition' => [
+                        'configurator_block_condition' => 'yes'
+                    ],
+                    'fields' => $repeater->get_controls(),
+                    'item_actions' => [
+                        'add'       => false,
+                        'duplicate' => false,
+                        'remove'    => false,
+                        'sort'      => true,
+                    ],
+                    'default' => [
+                        [
+                            'condition_key' =>__( 'authentication', 'configurator-blocks-pro' ),
+                        ],
+                    ],
+                    'title_field' => 'Rule',
+                ]
+            );
+        $this->end_controls_section();
     }
 
     /**
@@ -640,40 +769,290 @@ class Breadcrumbs extends Widget_Base {
 	 *
 	 * @access protected
 	 */
+    
+
     protected function render() {
         $settings = $this->get_settings_for_display();
+        // wrap  orginal to variable
+        if($settings['configurator_block_condition']=='yes'){
+            foreach (  $settings['condition_list'] as $item ) {
+                switch ($item['condition_key']) {
+                    case 'authentication':
+                        if($item['is_not']=='is' && is_user_logged_in()){
+                          // show original here
+                                    if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                                    $query = $this->get_query();
+                        
+                                    if ( $query ) {
+                                        if ( $query->have_posts() ) {
+                        
+                                            $this->render_breadcrumbs( $query );
+                        
+                                            wp_reset_postdata();
+                                            wp_reset_query();
+                                        }
+                                    } else {
+                                        $this->render_breadcrumbs();
+                                    }
+                                } else {
+                                    if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                                    <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                                        <?php
+                                        if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                                            yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                                        } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                                            rank_math_the_breadcrumbs();
+                                        } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                                            bcn_display();
+                                        } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                                            seopress_display_breadcrumbs();
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php }
+                                }
+                        }elseif($item['is_not']=='is_not' && !is_user_logged_in()){
+                           // show original here
+                            if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                                $query = $this->get_query();
+                    
+                                if ( $query ) {
+                                    if ( $query->have_posts() ) {
+                    
+                                        $this->render_breadcrumbs( $query );
+                    
+                                        wp_reset_postdata();
+                                        wp_reset_query();
+                                    }
+                                } else {
+                                    $this->render_breadcrumbs();
+                                }
+                            } else {
+                                if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                                <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                                    <?php
+                                    if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                                        yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                                    } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                                        rank_math_the_breadcrumbs();
+                                    } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                                        bcn_display();
+                                    } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                                        seopress_display_breadcrumbs();
+                                    }
+                                    ?>
+                                </div>
+                                <?php }
+                            }
+                        }
+                    break;
+                    case 'user':
+                        global $current_user;
+                        wp_get_current_user();
+                        $current_user = $current_user->user_login;
+                        if($item['is_not']=='is'){
+                            if($current_user==$item['current_user']){
+                               // show original here
+                                if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                                    $query = $this->get_query();
+                        
+                                    if ( $query ) {
+                                        if ( $query->have_posts() ) {
+                        
+                                            $this->render_breadcrumbs( $query );
+                        
+                                            wp_reset_postdata();
+                                            wp_reset_query();
+                                        }
+                                    } else {
+                                        $this->render_breadcrumbs();
+                                    }
+                                } else {
+                                    if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                                    <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                                        <?php
+                                        if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                                            yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                                        } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                                            rank_math_the_breadcrumbs();
+                                        } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                                            bcn_display();
+                                        } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                                            seopress_display_breadcrumbs();
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php }
+                                }
+                            }
+                        }elseif($item['is_not']=='is_not'){
+                            if($current_user!=$item['current_user']){
+                                // show original here
+                                    if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                                        $query = $this->get_query();
+                            
+                                        if ( $query ) {
+                                            if ( $query->have_posts() ) {
+                            
+                                                $this->render_breadcrumbs( $query );
+                            
+                                                wp_reset_postdata();
+                                                wp_reset_query();
+                                            }
+                                        } else {
+                                            $this->render_breadcrumbs();
+                                        }
+                                    } else {
+                                        if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                                        <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                                            <?php
+                                            if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                                                yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                                            } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                                                rank_math_the_breadcrumbs();
+                                            } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                                                bcn_display();
+                                            } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                                                seopress_display_breadcrumbs();
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php }
+                                    }
+                            }
+                        }
+                    break;
+                    case 'role':
+                        $user_meta = get_userdata(get_current_user_id());
+						$user_roles=$user_meta->roles;
+                        // Check if the role you're interested in, is present in the array.
+						if($user_roles){
+							if ( in_array( 'administrator', $user_roles, true ) ) {
+								$user_role = 'administrator';
+							}else if(in_array( 'editor', $user_roles, true )){
+								$user_role = 'editor';
+							}else if(in_array( 'author', $user_roles, true )){
+								$user_role = 'author';
+							}else if(in_array( 'contributor', $user_roles, true )){
+								$user_role = 'contributor';
+							}else if(in_array( 'subscriber', $user_roles, true )){
+								$user_role = 'subscriber';
+							}
+						}
+
+                        if($item['is_not']=='is'){
+							if($item['user_role']==$user_role){
+                               // show original here
+                                if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                                    $query = $this->get_query();
+                        
+                                    if ( $query ) {
+                                        if ( $query->have_posts() ) {
+                        
+                                            $this->render_breadcrumbs( $query );
+                        
+                                            wp_reset_postdata();
+                                            wp_reset_query();
+                                        }
+                                    } else {
+                                        $this->render_breadcrumbs();
+                                    }
+                                } else {
+                                    if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                                    <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                                        <?php
+                                        if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                                            yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                                        } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                                            rank_math_the_breadcrumbs();
+                                        } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                                            bcn_display();
+                                        } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                                            seopress_display_breadcrumbs();
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php }
+                                }
+                            }
+                            
+						}elseif($item['is_not']=='is_not'){
+							if($item['user_role']!=$user_role){
+                                // show original here
+                                    if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                                        $query = $this->get_query();
+                            
+                                        if ( $query ) {
+                                            if ( $query->have_posts() ) {
+                            
+                                                $this->render_breadcrumbs( $query );
+                            
+                                                wp_reset_postdata();
+                                                wp_reset_query();
+                                            }
+                                        } else {
+                                            $this->render_breadcrumbs();
+                                        }
+                                    } else {
+                                        if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                                        <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                                            <?php
+                                            if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                                                yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                                            } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                                                rank_math_the_breadcrumbs();
+                                            } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                                                bcn_display();
+                                            } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                                                seopress_display_breadcrumbs();
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php }
+                                    }
+                            }
+                        }
+
+                    break;
+                    default:
+                    echo $item['condition_key'].' condition need to set up';
+                    break;
+                }
+            }
+        }else{
+            //show original here
+                if ( $settings['breadcrumbs_type'] == 'configurator-blocks' ) {
+                    $query = $this->get_query();
         
-		if ( $settings['breadcrumbs_type'] == 'blank-elements' ) {
-			$query = $this->get_query();
-
-			if ( $query ) {
-				if ( $query->have_posts() ) {
-
-					$this->render_breadcrumbs( $query );
-
-					wp_reset_postdata();
-					wp_reset_query();
-				}
-			} else {
-				$this->render_breadcrumbs();
-			}
-        } else {
-			if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
-			<div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
-				<?php
-				if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
-					yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
-				} elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
-					rank_math_the_breadcrumbs();
-				} elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
-					bcn_display();
-				} elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
-					seopress_display_breadcrumbs();
-				}
-				?>
-			</div>
-			<?php }
-		}
+                    if ( $query ) {
+                        if ( $query->have_posts() ) {
+        
+                            $this->render_breadcrumbs( $query );
+        
+                            wp_reset_postdata();
+                            wp_reset_query();
+                        }
+                    } else {
+                        $this->render_breadcrumbs();
+                    }
+                } else {
+                    if ( ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) || ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) || ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) || ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) ) { ?>
+                    <div class="be-breadcrumbs be-breadcrumbs-<?php echo $settings['breadcrumbs_type']; ?>">
+                        <?php
+                        if ( 'yoast' === $settings['breadcrumbs_type'] && function_exists( 'yoast_breadcrumb' ) ) {
+                            yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+                        } elseif ( 'rankmath' === $settings['breadcrumbs_type'] && function_exists( 'rank_math_the_breadcrumbs' ) ) {
+                            rank_math_the_breadcrumbs();
+                        } elseif ( 'navxt' == $settings['breadcrumbs_type'] && function_exists( 'bcn_display' ) ) {
+                            bcn_display();
+                        } elseif ( 'seopress' == $settings['breadcrumbs_type'] && function_exists( 'seopress_display_breadcrumbs' ) ) {
+                            seopress_display_breadcrumbs();
+                        }
+                        ?>
+                    </div>
+                    <?php }
+                }
+        }
     }
     
     protected function get_query() {
@@ -1127,17 +1506,17 @@ class Breadcrumbs extends Widget_Base {
                 ] );
 
                 // Year link
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-year' ) . '><a ' . $this->get_render_attribute_string( 'breadcrumbs-item-year-crumb' ) . '>' . get_the_time('Y') . ' ' . __( 'Archives', 'blank-elements') . '</a></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-year' ) . '><a ' . $this->get_render_attribute_string( 'breadcrumbs-item-year-crumb' ) . '>' . get_the_time('Y') . ' ' . __( 'Archives', 'configurator-blocks') . '</a></li>';
                 
                 $this->render_separator();
 
                 // Month link
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-month' ) . '><a ' . $this->get_render_attribute_string( 'breadcrumbs-item-month-crumb' ) . '>' . get_the_time('M') . ' ' . __( 'Archives', 'blank-elements') . '</a></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-month' ) . '><a ' . $this->get_render_attribute_string( 'breadcrumbs-item-month-crumb' ) . '>' . get_the_time('M') . ' ' . __( 'Archives', 'configurator-blocks') . '</a></li>';
                 
                 $this->render_separator();
 
                 // Day display
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-day' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-day-crumb' ) . '> ' . get_the_time('jS') . ' ' . get_the_time('M') . ' ' . __( 'Archives', 'blank-elements') . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-day' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-day-crumb' ) . '> ' . get_the_time('jS') . ' ' . get_the_time('M') . ' ' . __( 'Archives', 'configurator-blocks') . '</strong></li>';
 
             } else if ( $query->is_month() ) {
                 
@@ -1176,12 +1555,12 @@ class Breadcrumbs extends Widget_Base {
                 ] );
 
                 // Year link
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-year' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-year-crumb' ) . '>' . get_the_time('Y') . ' ' . __( 'Archives', 'blank-elements' ) . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-year' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-year-crumb' ) . '>' . get_the_time('Y') . ' ' . __( 'Archives', 'configurator-blocks' ) . '</strong></li>';
                 
                 $this->render_separator();
 
                 // Month display
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-month' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-month-crumb' ) . '>' . get_the_time('M') . ' ' . __( 'Archives', 'blank-elements' ) . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-month' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-month-crumb' ) . '>' . get_the_time('M') . ' ' . __( 'Archives', 'configurator-blocks' ) . '</strong></li>';
 
             } else if ( $query->is_year() ) {
                 
@@ -1204,7 +1583,7 @@ class Breadcrumbs extends Widget_Base {
                 ] );
 
                 // Display year archive
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-year' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-year-crumb' ) . '>' . get_the_time('Y') . ' ' . __( 'Archives', 'blank-elements' ) . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-year' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-year-crumb' ) . '>' . get_the_time('Y') . ' ' . __( 'Archives', 'configurator-blocks' ) . '</strong></li>';
 
             } else if ( $query->is_author() ) {
 
@@ -1231,7 +1610,7 @@ class Breadcrumbs extends Widget_Base {
                 ] );
 
                 // Display author name
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-author' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-author-bread' ) . '>' . __( 'Author:', 'blank-elements' ) . ' ' . $userdata->display_name . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-author' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-author-bread' ) . '>' . __( 'Author:', 'configurator-blocks' ) . ' ' . $userdata->display_name . '</strong></li>';
 
             } else if ( get_query_var('paged') ) {
                 
@@ -1249,12 +1628,12 @@ class Breadcrumbs extends Widget_Base {
                             'be-breadcrumbs-crumb-current',
                             'be-breadcrumbs-crumb-current-' . get_query_var('paged'),
                         ],
-                        'title' => __( 'Page', 'blank-elements' ) . ' ' . get_query_var('paged'),
+                        'title' => __( 'Page', 'configurator-blocks' ) . ' ' . get_query_var('paged'),
                     ]
                 ] );
 
                 // Paginated archives
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-paged' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-paged-bread' ) . '>' . __('Page', 'blank-elements') . ' ' . get_query_var('paged') . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-paged' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-paged-bread' ) . '>' . __('Page', 'configurator-blocks') . ' ' . get_query_var('paged') . '</strong></li>';
 
             } else if ( $query->is_search() ) {
                 
@@ -1273,12 +1652,12 @@ class Breadcrumbs extends Widget_Base {
                             'be-breadcrumbs-crumb-current',
                             'be-breadcrumbs-crumb-current-' . get_search_query(),
                         ],
-                        'title' => __( 'Search results for:', 'blank-elements' ) . ' '  . get_search_query()
+                        'title' => __( 'Search results for:', 'configurator-blocks' ) . ' '  . get_search_query()
                     ]
                 ] );
 
                 // Search results page
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-search' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-search-crumb' ) . '>' . __( 'Search results for:', 'blank-elements' ) . ' '  . get_search_query() . '</strong></li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-search' ) . '><strong ' . $this->get_render_attribute_string( 'breadcrumbs-item-search-crumb' ) . '>' . __( 'Search results for:', 'configurator-blocks' ) . ' '  . get_search_query() . '</strong></li>';
 
             } else if ( $query->is_home() ) {
 				
@@ -1316,7 +1695,7 @@ class Breadcrumbs extends Widget_Base {
 				]);
 
                 // 404 page
-                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-error' ) . '>' . __( 'Error 404', 'blank-elements' ) . '</li>';
+                echo '<li ' . $this->get_render_attribute_string( 'breadcrumbs-item-error' ) . '>' . __( 'Error 404', 'configurator-blocks' ) . '</li>';
             }
 
             echo '</ul>';
@@ -1466,6 +1845,7 @@ class Breadcrumbs extends Widget_Base {
 	 * @access protected
 	 */
     protected function _content_template() {
+        
     }
 
 }

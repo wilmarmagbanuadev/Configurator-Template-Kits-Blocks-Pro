@@ -18,7 +18,7 @@ class Embed_Youtube extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'blank-elements-widgets' ];
+		return [ 'configurator-template-kits-blocks-pro-widgets' ];
 	}
 	protected function _register_controls() {
 		$this->start_controls_section(
@@ -111,36 +111,6 @@ class Embed_Youtube extends Widget_Base {
 				'default' => 'no'
 			]
 		);
-		// $this->add_control(
-		// 	'blank_element_output_html',
-		// 	[
-		// 		'label' => __( 'HTML', 'blank-elements-pro' ),
-		// 		'description' => __( 'If enabled, the HTML code will exist on the page but the widget will be hidden using CSS.', 'blank-elements-pro' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'options' => [
-		// 			'yes' => __( 'Yes', 'blank-elements-pro' ),
-		// 			'no' => __( 'No', 'blank-elements-pro' ),
-		// 		],
-		// 		'default' => 'no'
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'display_on',
-		// 	[
-		// 		'label' => __( 'Rule Condition', 'blank-elements-pro' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'all',
-		// 		'condition' => [
-		// 			'blank_element_condition' => 'yes'
-		// 		],
-		// 		'options' => [
-		// 			'all'  => __( 'All', 'blank-elements-pro' ),
-		// 			'any' => __( 'Any', 'blank-elements-pro' ),
-		// 		],
-		// 	]
-		// );
-
 
 		$repeater = new Repeater();
 

@@ -237,7 +237,7 @@ final class Configurator_Template_Kits_Blocks_Extension_Init {
 		$message = sprintf(
 			/* translators: 1: Plugin name 2: Elementor */
 			esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'blank-elements-pro' ),
-			'<strong>' . esc_html__( 'Configurator Template Kits Blocks', 'blank-elements-pro' ) . '</strong>',
+			'<strong>' . esc_html__( 'Configurator Template Kits Blocks Pro', 'blank-elements-pro' ) . '</strong>',
 			'<strong>' . esc_html__( 'Elementor', 'blank-elements-pro' ) . '</strong>'
 		);
 
@@ -261,7 +261,7 @@ final class Configurator_Template_Kits_Blocks_Extension_Init {
 		$message = sprintf(
 			/* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
 			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'blank-elements-pro' ),
-			'<strong>' . esc_html__( 'Configurator Template Kits Blocks', 'blank-elements-pro' ) . '</strong>',
+			'<strong>' . esc_html__( 'Configurator Template Kits Blocks Pro', 'blank-elements-pro' ) . '</strong>',
 			'<strong>' . esc_html__( 'Elementor', 'blank-elements-pro' ) . '</strong>',
 			 self::MINIMUM_ELEMENTOR_VERSION
 		);
@@ -286,7 +286,7 @@ final class Configurator_Template_Kits_Blocks_Extension_Init {
 		$message = sprintf(
 			/* translators: 1: Plugin name 2: PHP 3: Required PHP version */
 			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'elementor-test-extension' ),
-			'<strong>' . esc_html__( 'Configurator Template Kits Blocks', 'blank-elements-pro' ) . '</strong>',
+			'<strong>' . esc_html__( 'Configurator Template Kits Blocks Pro', 'blank-elements-pro' ) . '</strong>',
 			'<strong>' . esc_html__( 'PHP', 'blank-elements-pro' ) . '</strong>',
 			 self::MINIMUM_PHP_VERSION
 		);
@@ -364,10 +364,7 @@ final class Configurator_Template_Kits_Blocks_Extension_Init {
 		if( ! empty( $cart_button_option ) ) {
 			$default_options['cart_button-option'] = $cart_button_option;
 		}
-		// $num_prod_count = Configurator_Template_Kits_Blocks_Admin_Settings::num_prod();
-		// if( ! empty( $num_prod_count ) ) {
-		// 	$default_options['num_prod-count'] = $num_prod_count;
-		// }
+
 		$product_per_page = Configurator_Template_Kits_Blocks_Admin_Settings::product_per_page();
 		if( ! empty( $product_per_page ) ) {
 			$default_options['product_per_page-count'] = $product_per_page;
@@ -376,6 +373,17 @@ final class Configurator_Template_Kits_Blocks_Extension_Init {
 		if( ! empty( $advanced_f ) ) {
 			$default_options['advanced_f'] = $advanced_f;
 		}
+
+		$license_key = Configurator_Template_Kits_Blocks_Admin_Settings::license_key();
+		if( ! empty( $license_key ) ) {
+			$default_options['license_key'] = $license_key;
+		}
+		$license_key_v = Configurator_Template_Kits_Blocks_Admin_Settings::license_key_v();
+		if( ! empty( $license_key_v ) ) {
+			$default_options['license_key_v'] = $license_key_v;
+		}
+
+
 		return $default_options;
 	}
 
@@ -394,11 +402,11 @@ final class Configurator_Template_Kits_Blocks_Extension_Init {
 
         //console.log(window.blankelements);
 
-		var configurator-template-kits-blocks = {
-            resturl: '<?php echo get_rest_url() . 'configurator-template-kits-blocks/v1/'; ?>',
+		var blankelements = {
+            resturl: '<?php echo get_rest_url() . 'blankelements/v1/'; ?>',
         }
 
-        console.log(configurator-template-kits-blocks);
+        //console.log(blankelements);
 		<?php
         $output = ob_get_contents();
         ob_end_clean();
