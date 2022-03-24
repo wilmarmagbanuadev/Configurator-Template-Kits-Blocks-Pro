@@ -909,7 +909,7 @@ class Portfolio extends Widget_Base {
 			[
 				'name'				=> 'pagination_typography',
 				'selector'			=> '{{WRAPPER}} .elementor-pagination',
-				'scheme'			=> Scheme_Typography::TYPOGRAPHY_2,
+				//'scheme'			=> Scheme_Typography::TYPOGRAPHY_2,
 				'condition'				=> [
 					'pagination_type!' => 'none',
 				],

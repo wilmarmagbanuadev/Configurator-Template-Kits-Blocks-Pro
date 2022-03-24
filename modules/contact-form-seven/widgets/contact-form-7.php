@@ -285,7 +285,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'title_typography',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .blank-contact-form-7-title',
             ]
         );
@@ -316,7 +316,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'description_typography',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .blank-contact-form-7-description',
             ]
         );
@@ -494,7 +494,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'field_typography',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .wpcf7-form-control.wpcf7-text, {{WRAPPER}} .blank-contact-form-7 .wpcf7-form-control.wpcf7-textarea, {{WRAPPER}} .blank-contact-form-7 .wpcf7-form-control.wpcf7-select',
 				'separator'             => 'before',
             ]
@@ -612,7 +612,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'typography_label',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .wpcf7-form label',
                 'condition'             => [
                     'labels_switch'   => 'yes',
@@ -664,7 +664,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'typography_placeholder',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .wpcf7-form-control::-webkit-input-placeholder',
                 'condition'             => [
                     'placeholder_switch'   => 'yes',
@@ -1044,7 +1044,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'button_typography',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .wpcf7-form input[type="submit"]',
 				'separator'             => 'before',
             ]
@@ -1289,7 +1289,7 @@ class Contact_Form_7 extends Widget_Base {
             [
                 'name'                  => 'validation_errors_typography',
                 'label'                 => __( 'Typography', 'blank-elements-pro' ),
-                'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+                //'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
                 'selector'              => '{{WRAPPER}} .blank-contact-form-7 .wpcf7-validation-errors',
 				'separator'             => 'before',
 				'condition'             => [

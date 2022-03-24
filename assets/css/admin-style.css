@@ -6,80 +6,80 @@
 .attr-btn:focus,
 .attr-btn-primary.attr-focus,
 .attr-btn-primary:focus {
-  outline: none;  
+    outline: none;
 }
 
 #blankelements-modalinput-form .attr-modal-content {
-  -webkit-transition: opaicty .5s ease;
-  -o-transition: opaicty .5s ease;
-  transition: opaicty .5s ease;
-  position: relative; 
+    -webkit-transition: opaicty .5s ease;
+    -o-transition: opaicty .5s ease;
+    transition: opaicty .5s ease;
+    position: relative;
 }
 
 #blankelements-template-modalinput-form .attr-modal-content .blankelements-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 6; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 6;
 }
 
 .loading .blankelements-spinner {
-  display: block;
+    display: block;
 }
 
 @-webkit-keyframes infinite-spinning {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes infinite-spinning {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 .blankelements-spinner {
-  display: none;
-  position: relative;
-  width: 18px;
-  height: 18px;
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.5);
-  -webkit-animation: infinite-spinning 1.08s linear infinite;
-  animation: infinite-spinning 1.08s linear infinite;
-  vertical-align: middle;
-  margin-right: 7px;
-  top: -1px;
+    display: none;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-animation: infinite-spinning 1.08s linear infinite;
+    animation: infinite-spinning 1.08s linear infinite;
+    vertical-align: middle;
+    margin-right: 7px;
+    top: -1px;
 }
 
 .is-loading .blankelements-spinner {
-  display: inline-block;
+    display: inline-block;
 }
 
 .blankelements-spinner:after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  border-radius: 4px;
-  margin-left: -2px;
-  background: #fff;
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 4px;
+    margin-left: -2px;
+    background: #fff;
 }
 
 .blankelements-form-overlay {
@@ -109,12 +109,11 @@
     display: block;
 }
 
-
 .modal_message .close-msg {
     position: absolute;
     top: -12px;
     right: -12px;
-    background: #f8912c;
+    background: #35dce7;
     color: #fff;
     font-size: 12px;
     width: 24px;
@@ -125,95 +124,107 @@
     cursor: pointer;
 }
 
-
 #blankelements-modalinput-form .attr-modal-body {
-  min-height: 434px;
-  max-height: 435px;
-  overflow-y: auto;
-  overflow-x: hidden;
+    min-height: 434px;
+    max-height: 435px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #blankelements-modalinput-form .attr-form-control {
-  font-size: 14px;
-  height: 50px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07); 
+    font-size: 14px;
+    height: 50px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
 }
 
 #blankelements-modalinput-form .attr-input-label {
-  display: inline-block;
-  font-weight: 700;
-  font-size: 14px; 
+    display: inline-block;
+    font-weight: 700;
+    font-size: 14px;
 }
 
 @media (max-width: 767px) {
-  #blankelements-modalinput-form .attr-input-label {
-    margin-bottom: 10px; 
-  } 
+    #blankelements-modalinput-form .attr-input-label {
+        margin-bottom: 10px;
+    }
 }
 
 @media (min-width: 768px) {
-  #blankelements-modalinput-form .attr-input-label {
-    min-width: 30%; 
-  } 
+    #blankelements-modalinput-form .attr-input-label {
+        min-width: 30%;
+    }
 }
 
 #blankelements-modalinput-form .select2-container {
-  display: block;
-  min-width: 70%;
-  max-width: 100%; 
+    display: block;
+    min-width: 70%;
+    max-width: 100%;
 }
 
 #blankelements-modalinput-form .select2-container .select2-selection--single,
 #blankelements-modalinput-form .select2-container .select2-selection--multiple {
-  height: 50px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
-  padding: .375rem .75rem;
-  border-radius: .25rem;
-  line-height: 1;
-  font-size: 14px;
-  -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
-  transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
-  -o-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center; 
+    height: 50px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    line-height: 1;
+    font-size: 14px;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 #blankelements-modalinput-form .select2-container .select2-selection--multiple {
-  height: auto; 
+    height: auto;
 }
 
 #blankelements-modalinput-form .select2-container .selection {
-  display: block; 
+    display: block;
 }
 
 #blankelements-modalinput-form .select2-container--default .select2-selection--single {
-  border-color: #ddd; 
+    border-color: #ddd;
 }
 
 #blankelements-modalinput-form .select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height: 1;
-  padding-left: 0; 
+    line-height: 1;
+    padding-left: 0;
 }
 
 #blankelements-modalinput-form .select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: 100%;
-  width: 30px; 
+    height: 100%;
+    width: 30px;
 }
 
 #blankelements-modalinput-form .select2-container--default .select2-selection--multiple {
-  border-color: #ddd; 
+    border-color: #ddd;
 }
 
 @media (min-width: 768px) {
-  #blankelements-modalinput-form .blankelements-input-group {
+    #blankelements-modalinput-form .blankelements-input-group {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+}
+
+#blankelements-modalinput-form .blankelements-switch-group {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -223,72 +234,59 @@
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-  } 
-}
-
-#blankelements-modalinput-form .blankelements-switch-group {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between; 
 }
 
 .attr-modal-dialog-centered {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  height: 100%; 
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
 }
-.attr-modal-dialog-centered > form {
-  width: 100%; 
+
+.attr-modal-dialog-centered>form {
+    width: 100%;
 }
 
 .modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .modal-backdrop {
-  z-index: 9999; 
+    z-index: 9999;
 }
 
 div#blankelements_head-foot_modal.attr-modal {
-  z-index: 10000; 
+    z-index: 10000;
 }
 
 .blankelements_multipile_ajax_search_filed .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  line-height: 1.5;
-  font-size: .9em;
-  border: none;
-  border-radius: 0;
-  color: #6d7882; 
+    line-height: 1.5;
+    font-size: .9em;
+    border: none;
+    border-radius: 0;
+    color: #6d7882;
 }
 
 .blankelements_type_filter_tab_container .nav-tab:first-child {
-  margin-left: 0px; 
+    margin-left: 0px;
 }
 
 .blankelements-headerfooter-status {
-  display: inline-block;
-  font-weight: 700; 
+    display: inline-block;
+    font-weight: 700;
 }
 
 .blankelements-headerfooter-status-active {
-  color: #39b44a; 
+    color: #39b44a;
 }
-
 
 div#blankelements_head-foot_modal .attr-modal-dialog {
     width: 1100px;
@@ -313,9 +311,9 @@ div#blankelements_head-foot_modal .attr-modal-dialog {
 }
 
 .header-dialog:after {
-  content: "";
-  display: block;
-  clear: both;
+    content: "";
+    display: block;
+    clear: both;
 }
 
 span.header_logo_title {
@@ -358,13 +356,13 @@ span.header_logo_title {
 }
 
 .blankelements_modal_close:hover i {
-    background: #f8912c;
+    background: #35dce7;
     color: #fff;
 }
 
 .content-dialog {
-  width: 40%;
-  padding-right: 50px;
+    width: 40%;
+    padding-right: 50px;
 }
 
 .message-dialog.blankelements-lightbox-message {
@@ -425,7 +423,7 @@ form#blankelements-template-modalinput-form .attr-modal-content .attr-modal-body
 }
 
 .blankelements-input-group label,
-.blankelements-switch-group > label {
+.blankelements-switch-group>label {
     font-size: 15px;
     color: #fff;
     font-weight: 600;
@@ -459,7 +457,7 @@ form#blankelements-template-modalinput-form .attr-modal-content .attr-modal-body
     margin: 0 0 20px;
 }
 
-.blankelements-switch-group > label {
+.blankelements-switch-group>label {
     float: left;
     margin: 0;
     line-height: 26px;
@@ -470,11 +468,13 @@ form#blankelements-template-modalinput-form .attr-modal-content .attr-modal-body
     border: none;
 }
 
+
 /*.blankelements-input-group select.attr-form-control,
 .blankelements-input-group select.attr-form-control:focus {
     color: #72777c;
 }
 */
+
 .blankelements-input-group .attr-form-control:focus {
     border-color: #808080;
     color: #fff;
@@ -504,13 +504,13 @@ form#blankelements-template-modalinput-form .attr-modal-content .attr-modal-body
     background: #39b44a;
     border-color: transparent;
     color: #fff;
-	outline: none;
+    outline: none;
 }
 
 .attr-btn.blankelements-template-save-btn-editor:focus,
 .attr-btn.blankelements-template-save-btn-editor:active,
 .attr-btn.blankelements-template-save-btn-editor:active:focus {
-	background: #39b44a;
+    background: #39b44a;
     border-color: transparent;
     color: #fff;
 }
@@ -538,5 +538,3 @@ form#blankelements-template-modalinput-form .attr-modal-content .attr-modal-body
 #menu-posts-blank_elements ul li a[href*="post-new.php"] {
     display: none;
 }
-
-

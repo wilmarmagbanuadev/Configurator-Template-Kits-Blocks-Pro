@@ -4,7 +4,7 @@
  */
 ?>
 <div id="blankelements-template-library-header-logo">
-	<img src="<?php echo Configurator_Template_Kits_Blocks_URL; ?>/assets/images/configurator-icon.png" alt="<?php echo esc_attr_e('Logo','blank-elements-pro'); ?>">
+	<img src="<?php echo Configurator_Template_Kits_Blocks_URL; ?>/assets/images/official-logo-white.png" alt="<?php echo esc_attr_e('Logo','blank-elements-pro'); ?>">
 </div>
 <div id="blankelements-template-library-header-tabs"></div>
 <div id="blankelements-template-library-header-actions"></div>

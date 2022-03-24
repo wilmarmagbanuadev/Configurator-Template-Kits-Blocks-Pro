@@ -287,10 +287,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
             [
                 'label'                 => __( 'Color', 'blank-elements' ),
                 'type'                  => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Scheme_Color::get_type(),
-					'value' => Scheme_Color::COLOR_2,
-				],
+				// 'scheme' => [
+				// 	'type' => Scheme_Color::get_type(),
+				// 	'value' => Scheme_Color::COLOR_2,
+				// ],
                 'selectors'             => [
                     '{{WRAPPER}} .blank-entry-title a' => 'color: {{VALUE}}',
                 ],

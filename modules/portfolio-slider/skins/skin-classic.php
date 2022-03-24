@@ -64,10 +64,10 @@ class Skin_Classic extends Skin_Base {
                 'label'                 => __( 'Color', 'blank-elements' ),
                 'type'                  => Controls_Manager::COLOR,
                 'default'               => '#ffffff',
-				'scheme' => [
-					'type' => Scheme_Color::get_type(),
-					'value' => Scheme_Color::COLOR_2,
-				],
+				// 'scheme' => [
+				// 	'type' => Scheme_Color::get_type(),
+				// 	'value' => Scheme_Color::COLOR_2,
+				// ],
                 'selectors'             => [
                     '{{WRAPPER}} .blank-entry-title a' => 'color: {{VALUE}}',
                 ],

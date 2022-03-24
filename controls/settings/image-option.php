@@ -16,7 +16,7 @@ $label_name = str_replace("-", " ", $value);
         <input <?php echo esc_attr($options['checked']=== true ? 'checked' : ''); ?> 
             type="radio" value="<?php echo esc_attr($value); ?>" 
             class="blank-control-input" 
-            style="background-image: url('<?php echo esc_attr($style); ?>');border-radius: unset;width: 120px;height: 171px;background-position: center;background-repeat:no-repeat;background-size:contain"
+            style="background-image: url('<?php echo esc_attr($style); ?>');border-radius: unset;width: 120px;height: 170px;background-position: center;background-repeat:no-repeat;background-size:90%"
             name="<?php echo esc_attr($name); ?>" 
             id="blank-admin-switch__<?php echo esc_attr($widgets_class::strify($name) .$value); ?>"
         >

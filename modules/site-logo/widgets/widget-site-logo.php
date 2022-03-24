@@ -362,10 +362,10 @@ class Widget_Site_Logo extends Widget_Base {
 			[
 				'label'     => __( 'Border Color', 'blank-elements-pro' ),
 				'type'      => Controls_Manager::COLOR,
-				'scheme'    => [
-					'type'  => Scheme_Color::get_type(),
-					'value' => Scheme_Color::COLOR_1,
-				],
+				// 'scheme'    => [
+				// 	'type'  => Scheme_Color::get_type(),
+				// 	'value' => Scheme_Color::COLOR_1,
+				// ],
 				'condition' => [
 					'site_logo_image_border!' => 'none',
 				],
@@ -525,10 +525,10 @@ class Widget_Site_Logo extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .widget-image-caption' => 'color: {{VALUE}};',
 				],
-				'scheme'    => [
-					'type'  => Scheme_Color::get_type(),
-					'value' => Scheme_Color::COLOR_3,
-				],
+				// 'scheme'    => [
+				// 	'type'  => Scheme_Color::get_type(),
+				// 	'value' => Scheme_Color::COLOR_3,
+				// ],
 			]
 		);
 
@@ -548,7 +548,7 @@ class Widget_Site_Logo extends Widget_Base {
 			[
 				'name'     => 'caption_typography',
 				'selector' => '{{WRAPPER}} .widget-image-caption',
-				'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
+				//'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
 			]
 		);
 
@@ -1106,6 +1106,29 @@ class Widget_Site_Logo extends Widget_Base {
             }
         }else{
             //show original here
+			?>
+		
+			<div class="be-site-logo-set">           
+				<div class="be-site-logo-container">
+					<img class="be-site-logo-img <?php echo esc_attr( $class_animation ); ?>"  src="<?php echo esc_url( $image_url ); ?>"/>
+				</div>
+			</div>
+		<?php if ( $link ) : ?>
+					</a>
+		<?php endif; ?>
+		<?php
+		if ( $has_caption ) :
+			$caption_text = $this->get_caption( $settings );
+			?>
+			<?php if ( ! empty( $caption_text ) ) : ?>
+					<div class="be-caption-width"> 
+						<figcaption class="widget-image-caption wp-caption-text"><?php echo wp_kses_post( $caption_text ); ?></figcaption>
+					</div>
+			<?php endif; ?>
+				</figure>
+		<?php endif; ?>
+		</div>  
+			<?php
              
 		}
 		//end

@@ -817,7 +817,7 @@ class Widget_Navigation extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'      => 'menu_typography',
-				'scheme'    => Scheme_Typography::TYPOGRAPHY_1,
+				// 'scheme'    => Scheme_Typography::TYPOGRAPHY_1,
 				'separator' => 'before',
 				'selector'  => '{{WRAPPER}} a.be-menu-item, {{WRAPPER}} a.be-sub-menu-item',
 			]
@@ -837,10 +837,10 @@ class Widget_Navigation extends Widget_Base {
 						[
 							'label'     => __( 'Text Color', 'blank-elements-pro' ),
 							'type'      => Controls_Manager::COLOR,
-							'scheme'    => [
-								'type'  => Scheme_Color::get_type(),
-								'value' => Scheme_Color::COLOR_3,
-							],
+							// 'scheme'    => [
+							// 	'type'  => Scheme_Color::get_type(),
+							// 	'value' => Scheme_Color::COLOR_3,
+							// ],
 							'default'   => '',
 							'selectors' => [
 								'{{WRAPPER}} .menu-item a.be-menu-item, {{WRAPPER}} .sub-menu a.be-sub-menu-item' => 'color: {{VALUE}}',
@@ -877,10 +877,10 @@ class Widget_Navigation extends Widget_Base {
 						[
 							'label'     => __( 'Text Color', 'blank-elements-pro' ),
 							'type'      => Controls_Manager::COLOR,
-							'scheme'    => [
-								'type'  => Scheme_Color::get_type(),
-								'value' => Scheme_Color::COLOR_4,
-							],
+							// 'scheme'    => [
+							// 	'type'  => Scheme_Color::get_type(),
+							// 	'value' => Scheme_Color::COLOR_4,
+							// ],
 							'selectors' => [
 								'{{WRAPPER}} .menu-item a.be-menu-item:hover,
 								{{WRAPPER}} .sub-menu a.be-sub-menu-item:hover,
@@ -914,10 +914,10 @@ class Widget_Navigation extends Widget_Base {
 						[
 							'label'     => __( 'Link Hover Effect Color', 'blank-elements-pro' ),
 							'type'      => Controls_Manager::COLOR,
-							'scheme'    => [
-								'type'  => Scheme_Color::get_type(),
-								'value' => Scheme_Color::COLOR_4,
-							],
+							// 'scheme'    => [
+							// 	'type'  => Scheme_Color::get_type(),
+							// 	'value' => Scheme_Color::COLOR_4,
+							// ],
 							'default'   => '',
 							'selectors' => [
 								'{{WRAPPER}} .be-nav-menu-layout:not(.be-pointer__framed) .menu-item.parent a.be-menu-item:before,
@@ -1165,7 +1165,7 @@ class Widget_Navigation extends Widget_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name'      => 'dropdown_typography',
-					'scheme'    => Scheme_Typography::TYPOGRAPHY_4,
+					//'scheme'    => Scheme_Typography::TYPOGRAPHY_4,
 					'separator' => 'before',
 					'selector'  => '
 							{{WRAPPER}} .sub-menu li a.be-sub-menu-item,
@@ -1558,7 +1558,7 @@ class Widget_Navigation extends Widget_Base {
 				[
 					'name'     => 'all_typography',
 					'label'    => __( 'Typography', 'blank-elements-pro' ),
-					'scheme'   => Scheme_Typography::TYPOGRAPHY_4,
+					//'scheme'   => Scheme_Typography::TYPOGRAPHY_4,
 					'selector' => '{{WRAPPER}} .menu-item a.be-menu-item.elementor-button',
 				]
 			);
@@ -1604,10 +1604,10 @@ class Widget_Navigation extends Widget_Base {
 							'selector'       => '{{WRAPPER}} .menu-item a.be-menu-item.elementor-button',
 							'fields_options' => [
 								'color' => [
-									'scheme' => [
-										'type'  => Scheme_Color::get_type(),
-										'value' => Scheme_Color::COLOR_4,
-									],
+									// 'scheme' => [
+									// 	'type'  => Scheme_Color::get_type(),
+									// 	'value' => Scheme_Color::COLOR_4,
+									// ],
 								],
 							],
 						]
@@ -1671,10 +1671,10 @@ class Widget_Navigation extends Widget_Base {
 							'selector'       => '{{WRAPPER}} .menu-item a.be-menu-item.elementor-button:hover',
 							'fields_options' => [
 								'color' => [
-									'scheme' => [
-										'type'  => Scheme_Color::get_type(),
-										'value' => Scheme_Color::COLOR_4,
-									],
+									// 'scheme' => [
+									// 	'type'  => Scheme_Color::get_type(),
+									// 	'value' => Scheme_Color::COLOR_4,
+									// ],
 								],
 							],
 						]

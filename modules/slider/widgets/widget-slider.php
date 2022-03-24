@@ -188,7 +188,7 @@ class Widget_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'scheme' => Scheme_Typography::TYPOGRAPHY_1,
+				//'scheme' => Scheme_Typography::TYPOGRAPHY_1,
 				'selector' => '{{WRAPPER}} .blank-slide-title',
 			]
 		);
@@ -236,7 +236,7 @@ class Widget_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'scheme' => Scheme_Typography::TYPOGRAPHY_2,
+				//'scheme' => Scheme_Typography::TYPOGRAPHY_2,
 				'selector' => '{{WRAPPER}} .blank-slide-content,{{WRAPPER}} .blank-slide-content',
 			]
 		);

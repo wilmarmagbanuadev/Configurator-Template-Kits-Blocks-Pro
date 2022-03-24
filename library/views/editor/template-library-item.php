@@ -36,13 +36,17 @@ $template_url = Configurator_Template_Kits_Blocks_URL . 'library/manager/templat
 		</button>
 		<# } #>
 		<# if ( 'pro' == package ) { #>
-		<a  href="https://www.blankelements.com/" target="_blank" >
+		<!-- <a  href="https://www.class-configurator-template-kits-blocks.com/" target="_blank" >
 			<button class="elementor-template-library-template-action blankelements-preview-button-go-pro elementor-button elementor-button-success" >
 				<i class="eicon-heart"></i><span class="elementor-button-title"><?php
-					esc_html_e( 'Go Pro', 'blank-elements-pro' );
+					//esc_html_e( 'Go Pro', 'blank-elements-pro' );
 				?></span>
 			</button>
-		</a>
+		</a> -->
+		<button class="elementor-template-library-template-action blankelements-template-library-template-insert elementor-button elementor-button-success">
+			<i class="eicon-file-download"></i>
+			<span class="elementor-button-title"><?php esc_html_e( 'Insert Template', 'blank-elements-pro' ); ?></span>
+		</button>
 		<# } #>
 	</div>
 	<div class="elementor-template-name-sec">

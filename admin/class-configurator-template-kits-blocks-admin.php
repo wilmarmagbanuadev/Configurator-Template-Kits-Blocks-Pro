@@ -301,7 +301,7 @@ class Blank_Elements_Pro_Admin_Settings {
 			//pro
             //'instagram-feed',//pro//advanced function added.(not tested)
             'portfolio',//pro//advanced function added.
-            'portfolio-slider',//pro//advanced function added.
+            'portfolio-slider',//pro//advanced function added.//broken
             'products',//pro//advanced function added.
             'product-categories',//pro//advanced function added.
             'product-slider',//pro//advanced function added.
@@ -334,21 +334,22 @@ class Blank_Elements_Pro_Admin_Settings {
 		
 		return $default_list;
 	}
+	//single shop page
 	public static function product_page_style($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
 		
 		$default_list = [
-			'style1'=>['style1',Configurator_Template_Kits_Blocks_URL . 'assets/images/spp_style1.jpg'], 
-			'style2'=>['style2',Configurator_Template_Kits_Blocks_URL . 'assets/images/spp_style2.jpg'], 
-			'style3'=>['style3',Configurator_Template_Kits_Blocks_URL . 'assets/images/spp_style3.jpg'], 
-			'style4'=>['style4',Configurator_Template_Kits_Blocks_URL . 'assets/images/style_new1.jpg'], 
-			'style5'=>['style5',Configurator_Template_Kits_Blocks_URL . 'assets/images/style_new2.jpg'],
-			'style6'=>['style6',Configurator_Template_Kits_Blocks_URL . 'assets/images/style_new3.jpg'],
+			'style1'=>['style1',Configurator_Template_Kits_Blocks_URL . 'assets/images/style1.jpg'], 
+			'style2'=>['style2',Configurator_Template_Kits_Blocks_URL . 'assets/images/style2.jpg'], 
+			'style3'=>['style3',Configurator_Template_Kits_Blocks_URL . 'assets/images/style3.jpg'], 
+			// 'style4'=>['style4',Configurator_Template_Kits_Blocks_URL . 'assets/images/style_new1.jpg'], 
+			// 'style5'=>['style5',Configurator_Template_Kits_Blocks_URL . 'assets/images/style_new2.jpg'], 
+			// 'style6'=>['style6',Configurator_Template_Kits_Blocks_URL . 'assets/images/style_new3.jpg'], 
 		];
 		
 		return $default_list;
 	}
-
+	
 	public static function display_breadcrumb($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
 		
@@ -369,21 +370,28 @@ class Blank_Elements_Pro_Admin_Settings {
 		
 		return $default_list;
 	}
-	public static function cart_button($package = null){
+	
+	
+	public static function default_modules($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
-		
 		$default_list = [
-			'show', 
-			'hide', 
+			'header-footer',
 		];
-		
+        
 		return $default_list;
 	}
-	public static function advanced_f($package = null){
+
+
+	//shop page
+
+	public static function shop_page_style($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
 		
 		$default_list = [
-			'a m p',			 
+			'2', 
+			'3', 
+			'4',
+			'6',  
 		];
 		
 		return $default_list;
@@ -398,30 +406,24 @@ class Blank_Elements_Pro_Admin_Settings {
 		
 		return $default_list;
 	}
-	public static function default_modules($package = null){
-		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
-		$default_list = [
-			'header-footer',
-		];
-        
-		return $default_list;
-	}
-	public static function license_key($package = null){
+	public static function display_pagination($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
 		
 		$default_list = [
-			'license_key', 
-
+			'show', 
+			'hide', 
 		];
 		
 		return $default_list;
 	}
-	public static function license_key_v($package = null){
+
+
+	//advance
+	public static function advanced_f($package = null){
 		$package = ($package != null) ? $package : self::PACKAGE_TYPE;
 		
 		$default_list = [
-			'license_key_v'=>null, 
-
+			'a m p',			 
 		];
 		
 		return $default_list;

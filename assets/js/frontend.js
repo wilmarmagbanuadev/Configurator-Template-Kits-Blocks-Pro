@@ -1,6 +1,5 @@
 (function($) {
     "use strict";
-    console.log('test');
     var getElementSettings = function($element) {
         var elementSettings = {},
             modelCID = $element.data('model-cid');

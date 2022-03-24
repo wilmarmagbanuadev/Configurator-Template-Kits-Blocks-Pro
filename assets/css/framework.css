@@ -6359,7 +6359,7 @@ button.attr-close {
 .attr-nav-tabs>li>a:focus,
 .attr-nav-tabs>li>a:hover {
     background-color: #ffffff;
-    border-left-color: #f8912c;
+    border-left-color: #35dce7;
 }
 
 .attr-nav-tabs .attr-active>a .blankelements-admin-tab-icon,
@@ -6368,7 +6368,7 @@ button.attr-close {
 .attr-nav-tabs>li>a:focus .blankelements-admin-title,
 .attr-nav-tabs>li>a:hover .blankelements-admin-tab-icon,
 .attr-nav-tabs>li>a:hover .blankelements-admin-title {
-    color: #f8912c;
+    color: #35dce7;
 }
 
 .blankelements-admin-header {
@@ -6386,7 +6386,7 @@ button.attr-close {
 .blankelements-admin-header-title {
     font-size: 1rem;
     font-weight: bold;
-    color: #f8912c;
+    color: #35dce7;
     margin-bottom: 0;
 }
 
@@ -6414,12 +6414,12 @@ button.attr-close {
 
 .blankelements-admin-input-switch .blankelements-admin-control-input:checked~.blankelements-admin-control-label .blankelements-admin-control-label-switch:after {
     left: 30px;
-    background-color: #f8912c;
-    color: #f8912c;
+    background-color: #35dce7;
+    color: #35dce7;
 }
 
 .blankelements-admin-input-switch .blankelements-admin-control-input:checked~.blankelements-admin-control-label .blankelements-admin-control-label-switch:before {
-    border-color: #f8912c;
+    border-color: #35dce7;
     text-indent: 52px;
 }
 
@@ -6519,7 +6519,7 @@ button.attr-close {
     height: 2px;
     bottom: -1px;
     left: 0;
-    background: #f8912c;
+    background: #35dce7;
 }
 
 .blankelements-admin-section-heaer-title {
@@ -6539,7 +6539,7 @@ button.attr-close {
     line-height: 48px;
     margin-right: 24px;
     background-color: #fee9ee;
-    color: #f8912c;
+    color: #35dce7;
     text-align: center;
     border-radius: 3px;
     vertical-align: middle;
@@ -6748,7 +6748,7 @@ li#toplevel_page_blankelementspro.wp-has-current-submenu a.wp-has-submenu .wp-me
 .blankelements_wrapper .primary_area>div.attr-col-md-8 {
     background: #1f2428;
     border-radius: 20px;
-    min-height: 800px;
+    min-height: 600px;
 }
 
 div#blankelements-tab-contents {
@@ -6799,7 +6799,7 @@ body.blank_panel #wpcontent i.eicon {
 }
 
 .blank-input-switch button.attr-btn-primary {
-    background: #ff911e;
+    background: #35dce7;
     font-size: 16px;
     line-height: 20px;
     font-weight: 700;
@@ -6810,7 +6810,7 @@ body.blank_panel #wpcontent i.eicon {
 }
 
 .blank-input-switch button.attr-btn-primary:hover {
-    background: #ef8800;
+    background: #2ac6d0;
 }
 
 .blank-input-switch button.attr-btn-primary i {
@@ -6865,7 +6865,7 @@ p.author_text {
 
 p.author_text span.author_alt {
     font-size: 14px;
-    color: #ff911e;
+    color: #35dce7;
     display: block;
 }
 
@@ -6890,12 +6890,12 @@ p.info_txt b {
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
-    background: #ff911e;
+    background: #35dce7;
     border: none;
 }
 
 .document_text a.attr-btn:hover {
-    background: #ef8800;
+    background: #2ac6d0;
 }
 
 p.info_txt b {
@@ -7064,14 +7064,6 @@ h4.content_head_description {
     box-shadow: none;
 }
 
-.blank-input-text-blank__elements__pro__license__key__ .valid {
-    border: 1px solid green !important;
-}
-
-.blank-input-text-blank__elements__pro__license__key__ .invalid {
-    border: 1px solid red !important;
-}
-
 .attr-panel-collapse .form-group input[type="text"]::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
     color: rgba(255, 255, 255, 0.45);
@@ -7118,7 +7110,7 @@ span.blankelements-pro-badge {
     line-height: 18px;
     display: inline-block;
     padding: 0 20px 0 8px;
-    background: #ff911e;
+    background: #35dce7;
     color: #fff;
     clip-path: polygon(0 1%, 100% 0, 70% 100%, 0% 100%);
     position: absolute;
@@ -7253,7 +7245,7 @@ h4.pro-widget-label-name:after {
 }
 
 .remove_btn a.attr-btn {
-    background: #ff911e;
+    background: #35dce7;
     font-size: 15px;
     line-height: 20px;
     font-weight: 500;
@@ -7284,7 +7276,7 @@ h4.pro-widget-label-name:after {
 }
 
 .blank-input-switch input.button {
-    background: #ff911e;
+    background: #35dce7;
     font-size: 16px;
     line-height: 20px;
     font-weight: 700;
@@ -7295,7 +7287,7 @@ h4.pro-widget-label-name:after {
 }
 
 .blank-input-switch input.button:hover {
-    background: #ef8800;
+    background: #2ac6d0;
 }
 
 .license_form .license_btn input[type="submit"] {
@@ -7304,7 +7296,7 @@ h4.pro-widget-label-name:after {
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
-    background: #ff911e;
+    background: #35dce7;
     border: none;
     color: #fff;
     outline: none;
@@ -7312,7 +7304,7 @@ h4.pro-widget-label-name:after {
 }
 
 .license_form .license_btn input[type="submit"]:hover {
-    background: #ef8800;
+    background: #2ac6d0;
     color: #fff;
 }
 
@@ -7347,6 +7339,33 @@ h4.pro-widget-label-name:after {
     margin: 0 0 15px;
 }
 
+.blank-accordian-panel .attr-panel-collapse .form-group input[type="text"],
+#blank-admin-option-numberblank__elements__pro__product__per__page__count______,
+#blank-admin-option-textblank__elements__pro__license__key__,
+.select_col {
+    background: #1f2428 !important;
+    padding: 14px 15px !important;
+    height: auto;
+    font-size: 15px !important;
+    line-height: 20px !important;
+    border: 1px solid #808080 !important;
+    border-radius: 5px !important;
+    color: #fff !important;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.select_col {
+    width: 100%;
+    display: block;
+    max-width: 100% !important;
+    margin-bottom: 25px;
+}
+
+#blank__elements__pro__shop__page__style__list______ {
+    width: 100%;
+}
+
 .tab_titles .error {
     /*display: none;*/
 }
@@ -7377,7 +7396,7 @@ h4.pro-widget-label-name:after {
     height: 100% !important;
     margin: -2px -2px !important;
     background: unset !important;
-    border: 3px solid #ff911e;
+    border: 3px solid #35dce7;
     line-height: 0 !important;
 }
 
@@ -7410,7 +7429,7 @@ h4.pro-widget-label-name:after {
 }
 
 .attr-input-show-hide input::before {
-    background-color: #ff911e !important;
+    background-color: #35dce7 !important;
     width: 10px !important;
     height: 10px !important;
 }

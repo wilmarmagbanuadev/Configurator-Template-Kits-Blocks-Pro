@@ -1,9 +1,9 @@
 <?php
 $widgets_class = new Blank_Elements_Pro_Admin_Settings;
 
+//single shop page
 $all_shop_layouts = $widgets_class -> product_page_style();
 $product_page_style_list = ! empty( $blank_elements_options['product_page_style-list'] ) ? $blank_elements_options['product_page_style-list'] : array(); 
-
 
 
 $display_breadcrumb = $widgets_class -> display_breadcrumb();
@@ -13,9 +13,16 @@ $display_breadcrumb_option = ! empty( $blank_elements_options['display_breadcrum
 $related_products = $widgets_class -> related_products();
 $related_products_option = ! empty( $blank_elements_options['related_products-option'] ) ? $blank_elements_options['related_products-option'] : array(); 
 
-
+//shop page
 $product_per_page = $widgets_class -> product_per_page();
 $product_per_page_count = ! empty( $blank_elements_options['product_per_page-count'] ) ? $blank_elements_options['product_per_page-count'] : 5; 
+
+
+$shop_page_styles = $widgets_class -> shop_page_style();
+$shop_page_style = ! empty( $blank_elements_options['shop_page_style'] ) ? $blank_elements_options['shop_page_style'] : array(); 
+
+$display_pagination = $widgets_class -> display_pagination();
+$display_pagination_option = ! empty( $blank_elements_options['display_pagination'] ) ? $blank_elements_options['display_pagination'] : array(); 
 
 ?>
 
@@ -69,6 +76,7 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                                     <?php endforeach; ?>
                                 <div class="clear"></div>
                             </div>
+                            <br>
                             <hr>
                             <h4 style="color:#fff;">Display Breadcrumb</h4>
                             <p style="color:#fff;">Display Breadcrumb on single page.</p>
@@ -90,6 +98,7 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                                         <?php endforeach; ?>                  
                                 <div class="clear"></div>
                             </div>
+                            <br>
                             <hr>
                             <h4 style="color:#fff;">Related Products</h4>
                             <p style="color:#fff;">Display related products on single page.</p>
@@ -127,9 +136,29 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                 </div>
                 <div id="shop_page_data_control" class="attr-panel-collapse attr-collapse" role="tabpanel" aria-labelledby="shop_page_data_control">
                     <div class="attr-panel-body">
-                        <hr>
+                    <hr>
+                        <h4 class="" style="color:#fff;">Shop Page Style</h4>
+                        <p class="" style="color:#fff;">Choose shop page style</p>
+                        <select class="select_col" name="blank-elements-pro[shop_page_style][]" id="">
+                        <?php
+                            foreach($shop_page_styles as $widget):
+                                $pro = ($widget && $widgets_class::PACKAGE_TYPE == 'free') ? false : true;
+                                $widgets_class->input([
+                                    'type' => 'select',
+                                    'value'=> $widget,
+                                    'suffix'=> 'Column',
+                                    'options'=> [
+                                        'selected' => ((in_array( $widget, $shop_page_style ) && $pro == false) ? true : false),
+                                    ]
+                                ]);
+                            endforeach;
+                          ?>
+                        </select>
+                       
+                        
+                          <hr>
                         <h4 class="" style="color:#fff;">Number of Products</h4>
-                        <p class="" style="color:#fff;">How many products you want to display per page?</p>
+                        <p class="" style="color:#fff;">How many products you want to display per page? -1 to show all</p>
                         <?php //echo get_option('blank-elements-pro')['product_page_style-list'][0]; ?>
                         <?php
                               $widgets_class->input([
@@ -140,6 +169,26 @@ $product_per_page_count = ! empty( $blank_elements_options['product_per_page-cou
                                   'value' => ($product_per_page_count[0]==null)?5:$product_per_page_count[0],
                               ]);
                           ?>
+                        <br>
+                        <hr>
+                        <h4 class="" style="color:#fff;">Pagination</h4>
+                        <p class="" style="color:#fff;">Shop page pagination</p>
+                        <?php foreach($display_pagination as $widget): ?>
+                                    <?php
+                                        $pro = ($widget && $widgets_class::PACKAGE_TYPE == 'free') ? false : true;
+                                        $widgets_class->input([
+                                            'type' => 'show-hide',
+                                            'name' => 'blank-elements-pro[display_pagination][]',
+                                            'style' => $widget,
+                                            'value' => $widget,
+                                            'info' => ($display_pagination_option[0]==null)?'hide':$display_pagination_option[0],
+                                            'options'=> [
+                                                'checked' => ((in_array( $widget, $display_pagination_option ) && $pro == false) ? true : false),
+                                            ]
+                                        ]);
+                                            ?>
+                                <?php endforeach; ?>                  
+                        <div class="clear"></div>
                         <pre>
                             <?php  //var_dump(get_option('blank-elements-pro')); check if option is ok ?>
                         </pre>

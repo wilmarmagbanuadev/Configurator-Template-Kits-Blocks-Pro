@@ -848,7 +848,7 @@ class Posts extends Widget_Base {
 			[
 				'name'				=> 'pagination_typography',
 				'selector'			=> '{{WRAPPER}} .elementor-pagination',
-				'scheme'			=> Scheme_Typography::TYPOGRAPHY_2,
+				//'scheme'			=> Scheme_Typography::TYPOGRAPHY_2,
 				'condition'				=> [
 					'pagination_type!' => 'none',
 				],
@@ -2132,7 +2132,77 @@ class Posts extends Widget_Base {
             <div class="blank-posts-pagination-wrap" data-total="<?php echo $total_pages; ?>">
         <?php } ?>
 			<?php
+			if($settings['configurator_block_condition']=='yes'){
+				foreach (  $settings['condition_list'] as $item ) {
+					switch ($item['condition_key']) {
+						case 'authentication':
+							if($item['is_not']=='is' && is_user_logged_in()){
+							  // show original here
+							  $this->render_pagination();
+							}elseif($item['is_not']=='is_not' && !is_user_logged_in()){
+							   // show original here
+							   $this->render_pagination();
+							}
+						break;
+						case 'user':
+							global $current_user;
+							wp_get_current_user();
+							$current_user = $current_user->user_login;
+							if($item['is_not']=='is'){
+								if($current_user==$item['current_user']){
+								   // show original here
+								   $this->render_pagination();
+								}
+							}elseif($item['is_not']=='is_not'){
+								if($current_user!=$item['current_user']){
+									// show original here
+									$this->render_pagination();
+								}
+							}
+						break;
+						case 'role':
+							$user_meta = get_userdata(get_current_user_id());
+							$user_roles=$user_meta->roles;
+							// Check if the role you're interested in, is present in the array.
+							if($user_roles){
+								if ( in_array( 'administrator', $user_roles, true ) ) {
+									$user_role = 'administrator';
+								}else if(in_array( 'editor', $user_roles, true )){
+									$user_role = 'editor';
+								}else if(in_array( 'author', $user_roles, true )){
+									$user_role = 'author';
+								}else if(in_array( 'contributor', $user_roles, true )){
+									$user_role = 'contributor';
+								}else if(in_array( 'subscriber', $user_roles, true )){
+									$user_role = 'subscriber';
+								}
+							}
+	
+							if($item['is_not']=='is'){
+								if($item['user_role']==$user_role){
+								   // show original here
+								   $this->render_pagination();
+								}
+								
+							}elseif($item['is_not']=='is_not'){
+								if($item['user_role']!=$user_role){
+									// show original here
+									$this->render_pagination();
+									
+								}
+							}
+						break;
+						default:
+						echo $item['condition_key'].' condition need to set up';
+						break;
+					}
+				}
+			}else{
+				//show original here
 				$this->render_pagination();
+				 
+			}
+				
 			?>
 		</div>
         <?php

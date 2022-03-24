@@ -4,7 +4,7 @@
  * Description: Custom Elementor widgets for Configurator Theme
  * Plugin URI: https://innwit.com/
  * Author: Innwit
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: https://innwit.com/
  *
  * Text Domain: configurator-template-kits-blocks
